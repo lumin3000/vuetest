@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel=stylesheet href=/static/trumbowyg/ui/trumbowyg.min.css>
+  </head>
+  <body>
+    <script src=/static/jquery.1.11.3.min.js ></script>
+    <script src=/static/trumbowyg/trumbowyg.js ></script>
+    <script src=/static/trumbowyg/langs/zh_cn.min.js ></script>
+    <div id=trumbowyg></div>
+    <script>
+      $( document ).ready(function() {
+        $('#trumbowyg').trumbowyg({
+            lang:"zh_cn"
+          });
+        top.iframe=window;
+        console.log(111);
+      })
+    </script>
+  </body>
+  </html>
