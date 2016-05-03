@@ -17,6 +17,7 @@ import PanelView from './components/Panel'
 import BlankView from './components/Blank'
 Vue.use(Router)
 Vue.use(Resource)
+const localStorage = window.localStorage
 
 import auth from './auth'
 // Vue.http.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem('id_token')
@@ -25,6 +26,9 @@ Vue.http.options.headers = {
 }
 Vue.http.options.emulateJSON = true
 // Vue.http.options.emulateHTTP = true
+
+/* upload config */
+localStorage.setItem('uploadUrl', 'abcd.com')
 
 auth.checkAuth()
 
@@ -35,8 +39,8 @@ const RouterMap = {
   '/signup': {component: SignupView},
   '/signupbyphone': {component: SignupByPhoneView},
   '/missions': {component: MissionsView},
-  '/missionsnew': {component: MissionsNewView},
-  '/missionsedit': {component: MissionsEditView},
+  '/missions-new': {component: MissionsNewView},
+  '/missions-edit/:missionId': {component: MissionsEditView},
   '/account': {component: AccountView},
   '/profileuser': {component: ProfileUserView},
   '/profileenterprise': {component: ProfileEnterpriseView},
@@ -45,7 +49,7 @@ const RouterMap = {
   '/blank': {component: BlankView}
 }
 Object.keys(RouterMap).forEach(function (key) {
-  RouterMap[key].name = key.replace('/', '')
+  RouterMap[key].name = key.replace('/', '').split('/:')[0]
 })
 
 router.map(RouterMap)
@@ -57,5 +61,6 @@ router.beforeEach(function () {
 router.redirect({
   '*': '/panel'
 })
-
+window.app = App
+window.MissionsNew = MissionsNewView
 router.start(App, '#app')

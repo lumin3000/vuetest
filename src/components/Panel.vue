@@ -1,6 +1,5 @@
 <template>
   <div class="panel-wraper">
-    <div class="nav-userinfo">您好，tom，<a v-link="{name:'login'}">退出</a></div>
     <div class="hello">
       <h1>这里是登录后的首页{{ msg }}</h1>
     </div>

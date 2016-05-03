@@ -3,19 +3,63 @@
   <head>
     <meta charset="utf-8">
     <link rel=stylesheet href=/static/trumbowyg/ui/trumbowyg.min.css>
+    <link rel="stylesheet" href="/static/trumbowyg/plugins/colors/ui/trumbowyg.colors.min.css">
+    <style>
+      body
+      {
+        background-color: white;
+      }
+      .trumbowyg-box,
+      .trumbowyg-editor,
+      .trumbowyg-editor,
+      .trumbowyg-textarea {
+        min-height: 212px;
+        margin:0px auto;
+      }
+
+    </style>
   </head>
   <body>
     <script src=/static/jquery.1.11.3.min.js ></script>
-    <script src=/static/trumbowyg/trumbowyg.js ></script>
+    <script src=/static/trumbowyg/trumbowyg.min.js ></script>
     <script src=/static/trumbowyg/langs/zh_cn.min.js ></script>
+    <script src="/static/trumbowyg/plugins/colors/trumbowyg.colors.js"></script>
+    <script src="/static/trumbowyg/plugins/upload/trumbowyg.upload.min.js"></script>
     <div id=trumbowyg></div>
     <script>
       $( document ).ready(function() {
-        $('#trumbowyg').trumbowyg({
-            lang:"zh_cn"
-          });
+        window.editor = $('#trumbowyg').trumbowyg({
+            lang:"zh_cn",
+            btnsDef: {
+                // Create a new dropdown
+                image: {
+                    dropdown: ['insertImage', 'upload'],
+                    ico: 'insertImage'
+                }
+            },
+            btns: [
+                ['viewHTML'],
+                ['formatting'],
+                'btnGrp-semantic',
+                'foreColor',
+                'backColor',
+                ['link'],
+                ['image'],
+                'btnGrp-justify',
+                ['horizontalRule'],
+                ['removeformat'],
+                ['fullscreen']
+            ]
+        });
+        window.setHtml = function(html){
+          $('#trumbowyg').trumbowyg('html', html);
+        };
+        var docker = top.editorDocker;
+        setHtml(docker.initHtml());
+        editor.data('trumbowyg').o.plugins.upload.serverPath = window.localStorage.getItem('uploadUrl');
+        editor.on('tbwopenfullscreen',docker.fullscreen);
+        editor.on('tbwclosefullscreen',docker.closeFullscreen);
         top.iframe=window;
-        console.log(111);
       })
     </script>
   </body>

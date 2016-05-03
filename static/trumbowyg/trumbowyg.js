@@ -1465,6 +1465,7 @@ jQuery.trumbowyg = {
         },
 
         updateButtonPaneStatus: function () {
+            if(!this.doc.getSelection().focusNode){return true};//jerry fix iframe error
             var t = this,
                 prefix = t.o.prefix,
                 tags = t.getTagsRecursive(t.doc.getSelection().focusNode.parentNode),

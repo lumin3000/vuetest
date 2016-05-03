@@ -4,7 +4,9 @@
       <div class="navbar-header">
         <a v-link="{name:'panel'}">管理系统</a>
       </div>
+      <div class="nav-userinfo">您好，tom，<a v-link="{name:'login'}">退出</a></div>
     </nav>
+
     <div class="app-wraper">
       <div class="panelbar">
         <div class="container">
@@ -22,6 +24,10 @@
           transition-mode="out-in">
         </router-view>
       </div>
+    </div>
+
+    <div class="footer">
+      <p>版权信息 和 备案号</p>
     </div>
 </center>
 </template>
@@ -47,8 +53,17 @@ export default {
 
 
 <style>
+::-ms-clear { width : 0; height: 0; }
+::-ms-reveal { width : 0; height: 0; }
 body {
   background-color: white;
+}
+
+.footer{
+  line-height:120px;
+  color:#c0c0c0;
+  font-size: 18px;
+  font-weight: 100;
 }
 
 .navbar {
@@ -67,6 +82,35 @@ body {
   font-weight:100;
 }
 
+table, .table{
+  font-size:18px;
+  background-color:white;
+  border: 2px solid white;
+}
+table, .table *{
+  font-weight:200;
+}
+.table thead{
+  background-color:#d9d9d9;
+}
+
+.pagination > li > a, .pagination > li > span{
+  background-color:white;
+  cursor:pointer;
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  z-index: 2;
+  background-color: #d9d9d9;
+  border-color: transparent;
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: #d9d9d9;
+}
 
 a.without-underline:hover {
   text-decoration: none!important;
@@ -116,10 +160,12 @@ a.without-underline:hover {
   width:100%;
   min-height:800px;
   clear:both;
+
 }
 .views{
   padding:0!important;
   margin:0 0 0 180px!important;
+  max-width:1440px;
 }
 
 .panel-wraper {
@@ -237,17 +283,19 @@ a.without-underline:hover {
   line-height:80px;
   color:white;
   padding-right:38px;
-  right:0px
+  right:0px;
+  font-size:18px
 }
 .nav-userinfo a,.nav-userinfo a:hover{
   color:white;
 }
 
 #wysiwyg-container iframe {
-  width: 680px;
-  height:500px;
+  width: 100%;
   float:left;
-  border:1px solid red;
+  border:1px solid #d4d5d6;
+  left:0px;
+  top:0px;
 }
 .panelr{
   padding:35px 55px;
@@ -258,6 +306,47 @@ a.without-underline:hover {
   font-weight: 200;
   line-height: 52px;
   padding:8px 45px!important;
+}
+
+.form-group label {
+  font-size: 16px;
+  font-weight: 200;
+}
+
+ul.dropdown-menu{
+  background-color: #f3f4f6;
+  color:#818384;
+
+}
+ul.dropdown-menu > li > a{
+  font-size:16px;
+}
+
+ul.dropdown-menu > li > a:hover,
+ul.dropdown-menu > li > a:focus {
+  text-decoration: none;
+  color: #f3f4f6;
+  background-color: #818384;
+}
+
+.isFullscreen {
+  position:fixed;
+  height:100%;
+  z-index:9998;
+}
+
+</style>
+own-menu > li > a:hover,
+ul.dropdown-menu > li > a:focus {
+  text-decoration: none;
+  color: #f3f4f6;
+  background-color: #818384;
+}
+
+.isFullscreen {
+  position:fixed;
+  height:100%;
+  z-index:9998;
 }
 
 </style>
