@@ -82,6 +82,45 @@ body {
   font-weight:100;
 }
 
+.nav-tabs > li.disabled > a:hover {
+  border-color: transparent;
+  cursor:auto
+}
+.nav-tabs > li > a:hover {
+  border-color: #d9d9d9 #d9d9d9 transparent;
+  cursor:pointer;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  color: white;
+  border: 1px solid #e9573e;
+  background-color: #e9573e;
+}
+.nav-tabs.nav-justified > .active > a,
+.nav-tabs.nav-justified > .active > a:hover,
+.nav-tabs.nav-justified > .active > a:focus {
+  border: 1px solid #e9573e;
+  cursor:auto;
+}
+
+.nav-tabs.nav-justified > li > a {
+  border-bottom: 1px solid #e9573e!important;
+  font-size: 26px;
+  line-height: 60px;
+  font-weight: 300;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+  background-color: #d9d9d9;
+}
+
+.nav-justified {
+  height:110px;
+}
+
+
 table, .table{
   font-size:18px;
   background-color:white;
@@ -108,8 +147,51 @@ table, .table *{
   border-color: transparent;
 }
 
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus{
+  background-color:white;
+  color:#d9d9d9;
+}
+
+.pagination-bar * {
+ cursor: auto!important;
+}
+.pagination-bar>li>span:hover{
+ background-color: white
+}
+.pagination-bar input{
+ width:32px;
+}
+
 .table-hover > tbody > tr:hover {
   background-color: #d9d9d9;
+}
+
+.avatar{
+  width: 220px;
+  height:220px;
+  padding:0;
+  margin:0;
+  background-color: #d9d9d9;
+  text-align: center;
+}
+.avatar img{
+  width:220px;
+  height: 220px;
+}
+span.fileupload-button{
+  width: 220px!important;
+  line-height: 48px!important;
+  background-color: #f9682e!important;
+  border-color:#f9682e!important;
+  font-size: 20px!important;
+  font-weight: 200!important;
+  margin-top:12px!important;
+  z-index:1!important
 }
 
 a.without-underline:hover {
@@ -335,18 +417,27 @@ ul.dropdown-menu > li > a:focus {
   z-index:9998;
 }
 
-</style>
-own-menu > li > a:hover,
-ul.dropdown-menu > li > a:focus {
-  text-decoration: none;
-  color: #f3f4f6;
-  background-color: #818384;
+.btn-lg-group{
+  margin-top:10px
+}
+.btn-lg-group .btn-lg
+{
+  width:190px
 }
 
-.isFullscreen {
-  position:fixed;
-  height:100%;
-  z-index:9998;
+.profile-wraper{
+  width:750px;
+  margin:auto
+}
+
+div.inputGender button
+{
+  height: 50px;
+  width:  100px;
+}
+div.inputGender *{
+  font-size: 20px;
+  font-weight: 200;
 }
 
 </style>

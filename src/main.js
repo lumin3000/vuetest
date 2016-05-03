@@ -1,3 +1,5 @@
+window.UrlConf = {}
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import Resource from 'vue-resource'
@@ -15,10 +17,10 @@ import ProfileEnterpriseView from './components/ProfileEnterprise'
 import ReportView from './components/Report'
 import PanelView from './components/Panel'
 import BlankView from './components/Blank'
+
 Vue.use(Router)
 Vue.use(Resource)
 const localStorage = window.localStorage
-
 import auth from './auth'
 // Vue.http.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem('id_token')
 Vue.http.options.headers = {

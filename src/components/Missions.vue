@@ -36,11 +36,11 @@
             <th>开始时间</th>
             <th>结束时间</th>
             <th>推广方式</th>
-            <th>单价</th>
-            <th>总数量</th>
-            <th>剩余数量</th>
-            <th>总金额</th>
-            <th>操作</th>
+            <th class="text-right">单价</th>
+            <th class="text-right">总数量</th>
+            <th class="text-right">剩余数量</th>
+            <th class="text-right">总金额</th>
+            <th class="text-center">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -50,11 +50,11 @@
             <td>{{mission.beginTime}}</td>
             <td>{{mission.finishTime}}</td>
             <td>{{mission.strategy}}</td>
-            <td>{{mission.unitPrice}}</td>
-            <td>{{mission.amount}}</td>
-            <td>{{mission.remain}}</td>
-            <td>{{mission.totalPrice}}</td>
-            <td>
+            <td class="text-right">{{mission.unitPrice}}</td>
+            <td class="text-right">{{mission.amount}}</td>
+            <td class="text-right">{{mission.remain}}</td>
+            <td class="text-right">{{mission.totalPrice}}</td>
+            <td class="text-right">
               <button class="btn btn-primary" @click="routerGo({name:'missions-edit',params:{missionId:mission.id}})" >编辑</button>
               <button class="btn btn-danger" @click="removeMissionConfirm(mission.id)">删除</button>
             </td>
@@ -62,13 +62,13 @@
         </tbody>
       </table>
 
-      <ul class="pagination">
-        <li v-if="pageCurrent != 1">
+      <ul class="pagination" v-if="pageTotal>1" >
+        <li :class="(pageCurrent == 1)?'disabled':''">
           <a @click="page(1)" aria-label="Previous">
             <span aria-hidden="true">首页</span>
           </a>
         </li>
-        <li v-if="pageCurrent != 1">
+        <li :class="(pageCurrent == 1)?'disabled':''">
           <a @click="prevPage()" aria-label="Previous">
             <span aria-hidden="true">上一页</span>
           </a>
@@ -76,18 +76,18 @@
         <li v-for="thePage in pageTotal" :class="((pageCurrent==thePage+1)?'active':'')">
           <a @click="page($index+1)">{{thePage+1}}</a>
         </li>
-        <li v-if="pageCurrent != pageTotal">
+        <li :class="(pageCurrent == pageTotal)?'disabled':''">
           <a @click="nextPage()" aria-label="Next" >
             <span aria-hidden="true">下一页</span>
           </a>
         </li>
-        <li v-if="pageCurrent != pageTotal">
+        <li :class="(pageCurrent == pageTotal)?'disabled':''">
           <a @click="page(pageTotal)" aria-label="Next" >
             <span aria-hidden="true">尾页</span>
           </a>
         </li>
       </ul>
-      <ul class="pagination pagination-bar pull-right">
+      <ul class="pagination pagination-bar pull-right" v-if="pageTotal>1">
         <li>
           <span>
             当前第{{pageCurrent}}页/共{{pageTotal}}页&nbsp;转到
@@ -197,17 +197,3 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
  -->
-
- <style scoped>
-  .pagination-bar * {
-   cursor: auto!important;
- }
- .pagination-bar>li>span:hover{
-   background-color: white
- }
- .pagination-bar input{
-   width:32px;
- }
-
-
- </style>

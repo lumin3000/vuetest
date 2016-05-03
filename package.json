@@ -13,8 +13,10 @@
   "dependencies": {
     "babel-runtime": "^6.0.0",
     "bootstrap": "^3.3.6",
+    "native-promise-only": "^0.8.1",
     "validator": "^5.2.0",
     "vue": "^1.0.20",
+    "vue-file-upload": "0.0.4",
     "vue-resource": "^0.7.0",
     "vue-router": "^0.7.13"
   },
