@@ -118,7 +118,8 @@ export default {
   },
   route: {
     data (transition) {
-      this.$http.get(top.UrlConf.userInfoGet || '/static/fakeuser.json')
+      let url = urlConf.profileUser.show
+      this.$http[url?'post':'get'](url || '/static/fakeuser.json')
       .then( (res) => {
         res.data.user.gender = [res.data.user.gender]
         this.user = res.data.user

@@ -13,7 +13,7 @@
           type="text"
           class="form-control"
           placeholder="邮箱"
-          v-model="credentials.username"
+          v-model="credentials.email"
         >
       </div>
       <div class="form-group">
@@ -45,6 +45,15 @@
         <span class="icon-info-circled alert-icon-float-left"></span>
         <p>{{error}}</p>
     </alert>
+    <alert
+      :show.sync="alertSuccess"
+      :duration="3000"
+      type="info"
+      width="350px"
+      dismissable>
+        <span class="icon-info-circled alert-icon-float-left"></span>
+        <p>{{success}}</p>
+    </alert>
   </div>
 </template>
 
@@ -60,11 +69,13 @@ export default {
   data () {
     return {
       alertError: false,
+      alertSuccess: false,
       credentials: {
-        username: '',
+        email: '',
         password: ''
       },
-      error: ''
+      error: '',
+      success:''
     }
   },
 
@@ -72,24 +83,32 @@ export default {
 
     submit () {
       this.error = false
-      var credentials = {
-        name: this.credentials.username,
-        pwd: this.credentials.password,
-        type:'email'
+      var credentials =
+      {
+        email:this.credentials.email,
+        password:this.credentials.password
       }
-      if (Validator.isEmail(credentials.name)!=true){
+
+      if (Validator.isEmail(credentials.email)!=true){
         return this.alertError = !!(this.error = "邮件格式不正确")
       }
-      else if (Validator.isLength(credentials.pwd,{min: 6, max: 20})!=true){
+      else if (Validator.isLength(credentials.password,{min: 6, max: 20})!=true){
         return this.alertError = !!(this.error = "密码长度为6-20位")
       }
-      else if (Validator.isAlphanumeric(credentials.pwd)!=true){
+      else if (Validator.isAlphanumeric(credentials.password)!=true){
         return this.alertError = !!(this.error = "密码只能包含数字和英文字母")
       }
-      else if (credentials.pwd!=this.credentials.password2){
+      else if (credentials.password!=this.credentials.password2){
         return this.alertError = !!(this.error = "请确认输入两次相同的密码")
       }
-      auth.signup(this, credentials, 'secretquote')
+      auth.signup(this, credentials, 'email', (err)=> {
+        if(err){
+          console.log(err)
+          return this.alertError = !!(this.error = err)
+        }
+        this.alertSuccess = !!(this.success = "注册成功")
+
+      })
     }
   }
 }

@@ -6,16 +6,31 @@
   </div>
 </template>
 
-<script lang="coffee">
-Object.defineProperty exports, '__esModule', value: true
-exports.default = data: ->
-  { msg: 'Hello World!' }
-</script>
+<script>
+import alert from './vuetrap/Alert'
+import auth from '../auth'
+import {router} from '../main'
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  .panel-arrow{
-    top:100px;
-    left:180px;
+export default {
+  name:"panel",
+  components:{
+    alert
+  },
+  route: {
+    data (transition) {
+      if(auth.user.authenticated){
+        transition.next()
+      }else {
+        router.go({name:"login"})
+      }
+    }
+  },
+  data () {
+    return {
+      
+    }
+  },
+  methods: {
   }
-</style>
+}
+</script>

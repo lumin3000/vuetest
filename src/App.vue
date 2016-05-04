@@ -440,4 +440,22 @@ div.inputGender *{
   font-weight: 200;
 }
 
+.high-light {
+  color:#fe7d3c!important
+}
+
+.account-title {
+  font-size: 18px;
+  line-height:60px;
+  font-weight: 200;
+}
+
+.report-title {
+  font-size: 18px;
+  line-height:60px;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom:60px;
+}
+
 </style>

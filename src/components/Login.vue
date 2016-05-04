@@ -36,7 +36,9 @@
 </template>
 
 <script>
+import { router } from '../main'
 import auth from '../auth'
+import Validator from 'validator'
 import alert from './vuetrap/Alert'
 
 export default {
@@ -58,20 +60,30 @@ export default {
 
     submit () {
       this.error = false
-      var credentials = {
-        name: this.credentials.username,
-        pwd: this.credentials.password,
-        type:'email'
-      }
-      console.log(credentials)
+      let credentials = {password: this.credentials.password}
       if ( credentials.name == ''){
         return this.alertError = !!(this.error = "请输入邮箱或手机")
       }
       else if (credentials.pwd == ''){
         return this.alertError = !!(this.error = "请输入密码")
       }
-      auth.login(this, credentials, 'secretquote')
+      if (Validator.isEmail(this.credentials.username) != true){
+        credentials.mobile = this.credentials.username
+        credentials.type = 'mobile'
+      } else {
+        credentials.email = this.credentials.username
+        credentials.type = 'email'
+      }
+
+      auth.login(this, credentials,  (err)=>{
+        if(err){
+          return this.alertError = !!(this.error = err)
+        } else {
+          router.go(router.redirect)
+        }
+      })
     }
+
   }
 }
 </script>

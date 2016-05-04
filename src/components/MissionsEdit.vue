@@ -9,7 +9,6 @@ export default {
   name:"missionsEdit",
   route: {
     data (transition) {
-
       this.$http.get(API_URL,transition.to.params.missionId)
       .then( (data) => {
         this.items = data
@@ -31,7 +30,6 @@ export default {
     }
   },
   data () {
-    this.$http
     return {
       submitType:"保存并发布",
       planOptions: [
@@ -65,5 +63,3 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>

@@ -30,7 +30,7 @@
   <div class="profile-wraper">
     <div class="col-xs-3 text-right">
       <div class="avatar">
-        <img v-if="user.avatar" :src="user.avatar" >
+        <img v-if="enterprise.avatar" :src="enterprise.avatar" >
         <span v-else class="glyphicon glyphicon-camera" aria-hidden="true"></span>
       </div>
       <vue-file-upload
@@ -108,7 +108,8 @@ export default {
   },
   route: {
     data (transition) {
-      this.$http.get(top.UrlConf.enterpriseInfoGet || '/static/fakeEnterprise.json')
+      let url = urlConf.profileEnterprise.show
+      this.$http[url?'post':'get'](url || '/static/fakeEnterprise.json')
       .then( (res) => {
         this.enterprise = res.data.enterprise
         transition.next()

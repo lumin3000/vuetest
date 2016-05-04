@@ -1,7 +1,9 @@
-import {router} from '../main'
-const API_URL = 'http://lexiang.7maker.cn/openapi'
-const LOGIN_URL = API_URL + '/user/login'
-const SIGNUP_URL = API_URL + '/user/regist'
+const API_URL = 'http://lexiang.7maker.cn'
+const LOGIN_URL = API_URL + '/user/login/email'
+const LOGIN_PHONE_URL = API_URL + '/user/login/mobile'
+const SIGNUP_URL = API_URL + '/user/register/email'
+const SIGNUP_PHONE_URL = API_URL + '/user/register/mobile'
+const SIGNUP_PHONE_AUTHCODE_URL = API_URL + '/user/register/authcode'
 const localStorage = window.localStorage
 export default {
 
@@ -9,35 +11,54 @@ export default {
     authenticated: false
   },
 
-  login (context, creds, redirect) {
-    context.$http.post(LOGIN_URL, creds, (data) => {
-      console.log('ok')
-      // localStorage.setItem('id_token', data.id_token)
-
-      this.user.authenticated = true
-
-      if (redirect) {
-        router.go(redirect)
+  login (context, creds, cb) {
+    let url = (creds.type === 'email') ? LOGIN_URL : LOGIN_PHONE_URL
+    context.$http.post(url, creds)
+    .then((res) => {
+      if (res.data.msg === 'success') {
+        this.user.authenticated = true
+        localStorage.setItem('id_token', res.data.items.scode)
+        localStorage.setItem('id_user', res.data.items.uid)
+        cb()
+      } else {
+        cb(res.data.msg)
       }
-    }
-    ).error((err) => {
-      context.error = err
+    }, (err) => {
+      cb(err.data)
     })
   },
 
-  signup (context, creds, redirect) {
-    context.$http.post(SIGNUP_URL, creds, (data) => {
-      console.log('ok')
-      // localStorage.setItem('id_token', data.id_token)
-
-      this.user.authenticated = true
-
-      if (redirect) {
-        router.go(redirect)
+  authMobile (context, data, cb) {
+    context.$http.post(SIGNUP_PHONE_AUTHCODE_URL, data)
+    .then((res) => {
+      if (res.data.msg === 'success') {
+        cb()
+      } else {
+        console.log('res')
+        console.log(res)
       }
+    }, (err) => {
+      cb(err.data)
+    })
+  },
+
+  signup (context, creds, type, cb) {
+    let url = SIGNUP_URL
+    if (type === 'mobile') {
+      url = SIGNUP_PHONE_URL
     }
-    ).error((err) => {
-      context.error = err
+    context.$http.post(url, creds)
+    .then((res) => {
+      if (res.data.msg === 'success') {
+        this.user.authenticated = true
+        localStorage.setItem('id_token', res.data.items.scode)
+        localStorage.setItem('id_user', res.data.items.uid)
+        cb()
+      } else {
+        cb(res.data.msg)
+      }
+    }, (err) => {
+      cb(err.data)
     })
   },
 

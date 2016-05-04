@@ -44,6 +44,15 @@
         <span class="icon-info-circled alert-icon-float-left"></span>
         <p>{{error}}</p>
     </alert>
+    <alert
+      :show.sync="alertSuccess"
+      :duration="3000"
+      type="info"
+      width="350px"
+      dismissable>
+        <span class="icon-info-circled alert-icon-float-left"></span>
+        <p>{{success}}</p>
+    </alert>
   </div>
 </template>
 
@@ -59,12 +68,14 @@ export default {
   data () {
     return {
       alertError: false,
+      alertSuccess:false,
       credentials: {
         username: '',
         password: '',
         password2: ''
       },
-      error: ''
+      error: '',
+      success:''
     }
   },
 
@@ -73,13 +84,20 @@ export default {
       if (Validator.isMobilePhone(this.credentials.username, 'zh-CN')!=true){
         return this.alertError = !!(this.error = "请输入正确的手机号码")
       }
-      this.alertError = !!(this.error = "这个功能还在开发中")
+      auth.authMobile(this,{mobile:this.credentials.username},( (err) => {
+        if (err){
+          return this.alertError = !!(this.error = err)
+        }
+        this.alertSuccess = !!(this.success = "验证码已发送，请查收")
+      }))
+
     },
     submit () {
       this.error = false
       var credentials = {
-        name: this.credentials.username,
-        pwd: this.credentials.password
+        mobile: this.credentials.username,
+        password: this.credentials.password,
+        code:this.credentials.password2
       }
       if (Validator.isMobilePhone(this.credentials.username, 'zh-CN')!=true){
         return this.alertError = !!(this.error = "请输入正确的手机号码")
@@ -93,7 +111,14 @@ export default {
       else if (Validator.isLength(this.credentials.password2, {min: 4,max: 6})!=true){
         return this.alertError = !!(this.error = "请输入手机验证码")
       }
-      auth.signup(this, credentials, 'secretquote')
+      auth.signup(this, credentials, 'mobile', (err)=> {
+        if(err){
+          console.log(err)
+          return this.alertError = !!(this.error = err)
+        }
+        this.alertSuccess = !!(this.success = "注册成功")
+
+      })
     }
   }
 }

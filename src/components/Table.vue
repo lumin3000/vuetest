@@ -1,6 +1,6 @@
 <template>
   <div class="panel-wraper">
-    <div class="arrow arrow-pos1">&nbsp;</div>
+    <div class="arrow" :class="arrowPosition">&nbsp;</div>
     <alert
       :show.sync="alertSuccess"
       :duration="3000"
@@ -23,40 +23,22 @@
     </alert>
 
     <div class="panelr">
-      <center>
-        <a class="btn btn-primary btn-publish" v-link="{name:'missions-new'}">发布新任务</a>
-      </center>
-      <p v-if="items">我的任务：</p>
+      <div class="title" :class="pageTitle.className">
+        <div v-if="extraInfo">
+          {{{extraInfo}}}
+        </div>
+        <div>{{{pageTitle.name}}}</div>
+      </div>
+
       <table class="table table-hover" v-if="items">
         <thead>
           <tr>
-            <th>任务名称</th>
-            <th>状态</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>推广方式</th>
-            <th class="text-right">单价</th>
-            <th class="text-right">总数量</th>
-            <th class="text-right">剩余数量</th>
-            <th class="text-right">总金额</th>
-            <th class="text-center">操作</th>
+            <th v-for="item in thead">{{item}}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in items">
-            <td>{{item.title}}</td>
-            <td>{{item.status}}</td>
-            <td>{{item.beginTime}}</td>
-            <td>{{item.finishTime}}</td>
-            <td>{{item.strategy}}</td>
-            <td class="text-right">{{item.unitPrice}}</td>
-            <td class="text-right">{{item.amount}}</td>
-            <td class="text-right">{{item.remain}}</td>
-            <td class="text-right">{{item.totalPrice}}</td>
-            <td class="text-right">
-              <button class="btn btn-primary" @click="routerGo({name:'missions-edit',params:{missionId:item.id}})" >编辑</button>
-              <button class="btn btn-danger" @click="removeMissionConfirm(item.id)">删除</button>
-            </td>
+            <td v-for="key in tbody">{{{item[key]}}}</td>
           </tr>
         </tbody>
       </table>
@@ -98,43 +80,22 @@
   </div>
 </template>
 <script>
-/*
-top.fakeMissions = []
-for(let i=1;i<=100;i++)
-{
-  fakeMissions.push({
-    id:parseInt(1000*Math.random())+10000,
-    title:'任务'+i,
-    status:(!!(i%3))?'进行中':"已完成",
-    beginTime:"2016-04-12 12:20",
-    finishTime:"2016-05-12 12:20",
-    strategy:(!!(i%3))?'微博':"微信",
-    unitPrice:parseInt(10*Math.random())+2,
-    amount:parseInt(20*Math.random())+20,
-    remain:parseInt(18*Math.random())+10,
-    totalPrice:parseInt(200*Math.random())+50
-  })
-}
-*/
-
 import alert from './vuetrap/Alert'
 import {router} from '../main'
 import pageObject from './Pagination'
 
 export default {
   mixins: [pageObject],
-  name:"missions",
   components:{
     alert
   },
   route: {
     data (transition) {
-      let url = urlConf.missions.list
       let params = {
         scode:localStorage.getItem('id_token'),
         uid:localStorage.getItem('id_user')
       }
-      this.$http[url?'post':'get']( url || this.fakeUrl, params)
+      this.$http[this.url?'post':'get']( this.url || this.fakeUrl, params)
       .then( (res) => {
         if(!res.data.items){
           return transition.next()
@@ -149,7 +110,13 @@ export default {
   },
   data () {
     return {
-      fakeUrl:'/static/fakemissions.json',
+      arrowPosition:'',
+      pageTitle:false,
+      extraInfo:false,
+      thead:[''],
+      tbody:[''],
+      url:false,
+      fakeUrl:'/static/fakeaccount.json',
       inputPageNumber:1,
       pageCurrent:0,
       pageDefault:10,
@@ -164,18 +131,7 @@ export default {
   },
 
   methods: {
-    routerGo (r) {
-      router.go(r)
-    },
-    removeMissionConfirm (){
 
-    },
-    removeMission (){
-
-    }
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
- -->

@@ -168,9 +168,14 @@ export default {
     datepicker
   },
   route:{
+    canActivate() {
+      return auth.user.authenticated
+    },
     deactivate (transition) {
       this.error = false
-
+      if (this.submitSuccess === true){
+        return transition.next()
+      }
       if ( iframe.$('#trumbowyg').trumbowyg('html') != this.items.doc){
         this.alertError = !!(this.error = "新内容或已修改的内容还没发布，无法离开")
         transition.abort()
@@ -186,11 +191,8 @@ export default {
       submitType:"发布",
       submitSuccess:false,
       planOptions: [
-        {value:'Apple', label:'Apple'},
-        {value:'Banana', label:'Banana想讲湘江想讲湘江想讲湘江'},
-        {value:'Cherry', label:'Cherry'},
-        {value:'Orange', label:'Orange'},
-        {value:'Grape', label:'Grape'},
+        {value:'weixin', label:'微信'},
+        {value:'weibo', label:'微博'}
       ],
       disabled: [],
       beginTime: 'Oct/06/2015',
@@ -205,7 +207,7 @@ export default {
         description: '',
         price:100,
         amount:100,
-        plan:['Apple'],
+        plan:['weinxin'],
         doc:''
       },
       error: '',
@@ -225,17 +227,39 @@ export default {
       }
       this.error = false
       this.success = false
-      var items = this.items
-      items.doc = iframe.$('#trumbowyg').trumbowyg('html')
-      this.$http.post(API_URL,items)
-      .then( (data) => {
-        console.log(data)
-        this.alertSuccess = !!(this.success = '发布成功')
-        this.xhrLock = false
-        this.submitSuccess = true
-        setTimeout( function(){router.go({name:"missions"})}, 3000)
+      let items = {
+        'task_name': this.items.title,
+  			'task_desc': this.items.description,
+  			'task_starttime': this.beginTime,
+  			'task_endtime': this.finishTime,
+  			'task_price': this.items.price,
+  			'task_sharecount': this.items.amount,
+  			'task_sharechannel': this.items.plan[0],
+  			'task_media': iframe.$('#trumbowyg').trumbowyg('html'),
+        'uid': localStorage.getItem('id_user'),
+        'scode':localStorage.getItem('id_token')
+      }
+      console.log(items)
+      // items.doc = iframe.$('#trumbowyg').trumbowyg('html')
+      this.$http.post(urlConf.missions.new,items)
+      .then( (res) => {
+        console.log(res)
+        if(res.data.msg === 'success' )
+        {
+          this.alertSuccess = !!(this.success = '发布成功')
+          this.xhrLock = false
+          this.submitSuccess = true
+          setTimeout( function(){
+            console.log(router.go)
+            router.go({name:"missions"})
+          }, 3500)
+        } else {
+          this.alertError = !!(this.error = res.data.msg)
+          this.xhrLock = false
+        }
+
       }, (err) => {
-        console.log(err)
+        console.log("missionsNew.submit().$http.post.error:"+err)
         this.alertError = !!(this.error = '网站服务出现错误')
         this.xhrLock = false
       });
