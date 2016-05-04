@@ -1,7 +1,7 @@
 window.uri = 'http://lexiang.7maker.cn'
 window.urlConf = {
   missions: {
-    list: false /* `${window.uri}/task/info/listpub` */,
+    list: `${window.uri}/task/info/listpub`,
     show: `${window.uri}/task/info`,
     new: `${window.uri}/task/publish`,
     edit: false,
@@ -15,7 +15,8 @@ window.urlConf = {
     show: false,
     edit: false
   },
-  report: false
+  report: false,
+  account: false
 }
 
 window._uDecode = function (s) { return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1')) }

@@ -53,10 +53,10 @@
             <td class="text-right">{{item.amount}}</td>
             <td class="text-right">{{item.remain}}</td>
             <td class="text-right">{{item.totalPrice}}</td>
-            <td class="text-right">
-              <button class="btn btn-primary" @click="routerGo({name:'missions-edit',params:{missionId:item.id}})" >编辑</button>
-              <button class="btn btn-danger" @click="removeMissionConfirm(item.id)">删除</button>
-            </td>
+              <td class="text-right">
+                <button class="btn btn-primary" @click="routerGo({name:'missions-edit',params:{missionId:item.id}})" >编辑</button>
+                <button class="btn btn-danger" @click="removeMissionConfirm(item.id)">删除</button>
+              </td>
           </tr>
         </tbody>
       </table>
@@ -129,17 +129,29 @@ export default {
   },
   route: {
     data (transition) {
-      let url = urlConf.missions.list
       let params = {
         scode:localStorage.getItem('id_token'),
         uid:localStorage.getItem('id_user')
       }
-      this.$http[url?'post':'get']( url || this.fakeUrl, params)
+      this.$http[this.url?'post':'get']( this.url || this.fakeUrl, params)
       .then( (res) => {
         if(!res.data.items){
           return transition.next()
         }
-        this.pagination(res.data.items)
+        let items = res.data.items.map(function(o){
+          return {
+            title:o.t_name,
+            unitPrice:o.t_price,
+            status:o.t_status,
+            beginTime:o.t_start_time,
+            finishTime:o.t_end_time,
+            strategy:o.t_type,
+            amount:o.t_limit,
+            remain:o.t_join_user,
+            totalPrice:(o.t_price * o.t_limit)
+          }
+        })
+        this.pagination(items)
         transition.next()
       }, (err) => {
         this.alertError = !!(this.error = '网站服务出现错误')
@@ -149,6 +161,7 @@ export default {
   },
   data () {
     return {
+      url:urlConf.missions.list,
       fakeUrl:'/static/fakemissions.json',
       inputPageNumber:1,
       pageCurrent:0,
