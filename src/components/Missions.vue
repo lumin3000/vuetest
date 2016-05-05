@@ -138,8 +138,11 @@ export default {
         if(!res.data.items){
           return transition.next()
         }
-        let items = res.data.items.map(function(o){
+        this.items = []
+        this.itemsStore = []
+        let items = res.data.items.reverse().map(function(o){
           return {
+            id:o.t_id,
             title:o.t_name,
             unitPrice:o.t_price,
             status:o.t_status,

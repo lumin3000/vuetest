@@ -60,6 +60,7 @@
 import auth from '../auth'
 import Validator from 'validator'
 import alert from './vuetrap/Alert'
+import { router } from '../main'
 
 export default {
   components:{
@@ -117,7 +118,7 @@ export default {
           return this.alertError = !!(this.error = err)
         }
         this.alertSuccess = !!(this.success = "注册成功")
-
+        setTimeout(function(){router.go(router.redirect)},1500)
       })
     }
   }

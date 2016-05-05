@@ -4,7 +4,7 @@ window.urlConf = {
     list: `${window.uri}/task/info/listpub`,
     show: `${window.uri}/task/info`,
     new: `${window.uri}/task/publish`,
-    edit: false,
+    edit: `${window.uri}/task/publish/update`,
     remove: false
   },
   profileUser: {
@@ -19,7 +19,18 @@ window.urlConf = {
   account: false
 }
 
+// /task/info/fortune   这个临时放这里了，余额
+// task/info/income   流水
+
 window._uDecode = function (s) { return unescape(s.replace(/\\(u[0-9a-fA-F]{4})/gm, '%$1')) }
+window.utoa = function (str) { return window.btoa(unescape(encodeURIComponent(str))) }
+window.atou = function (str) {
+  try {
+    return decodeURIComponent(escape(window.atob(str)))
+  } catch (e) {
+    return 'error encode...'
+  }
+}
 
 import Vue from 'vue'
 import Router from 'vue-router'

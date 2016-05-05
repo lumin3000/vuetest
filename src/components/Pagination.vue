@@ -15,6 +15,7 @@ export default {
         }
       }
       this.pageTotal = pageTotal
+      this.pageCurrent = 0
       this.page(1)
     },
     nextPage (){
@@ -31,6 +32,7 @@ export default {
       }
       this.pageCurrent = pageNumber;
       this.items = this.itemsStore.slice((pageNumber-1)*this.pageDefault,pageNumber*this.pageDefault)
+
     }
   }
 }

@@ -4,7 +4,7 @@
       <div class="navbar-header">
         <a v-link="{name:'panel'}">管理系统</a>
       </div>
-      <div class="nav-userinfo">您好，tom，<a v-link="{name:'login'}">退出</a></div>
+      <div class="nav-userinfo">您好，tom，<a @click="logout()">退出</a></div>
     </nav>
 
     <div class="app-wraper">
@@ -34,6 +34,7 @@
 
 <script>
 import auth from './auth'
+import { router } from './main'
 
 export default {
   data() {
@@ -43,9 +44,9 @@ export default {
   },
 
   methods: {
-
     logout() {
       auth.logout()
+      router.go({name:"login"})
     }
   }
 }
@@ -370,6 +371,7 @@ a.without-underline:hover {
 }
 .nav-userinfo a,.nav-userinfo a:hover{
   color:white;
+  cursor: pointer
 }
 
 #wysiwyg-container iframe {

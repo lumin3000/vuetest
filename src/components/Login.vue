@@ -4,6 +4,7 @@
       <h3>登录</h3>
       <div class="form-group">
         <input
+          @keyup.enter="submit"
           type="text"
           class="form-control"
           placeholder="邮箱 / 手机"
@@ -12,6 +13,7 @@
       </div>
       <div class="form-group">
         <input
+          @keyup.enter="submit"
           type="password"
           class="form-control"
           placeholder="密码"

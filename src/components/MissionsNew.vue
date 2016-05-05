@@ -53,7 +53,7 @@
           <label for="inputTitle" class="col-xs-2 control-label">开始时间：</label>
           <div class="col-xs-4">
             <datepicker
-            :value.sync="beginTime"
+            :value.sync="items.beginTime"
             :disabled-days-of-Week="disabled"
             :format="format.toString()"
             :show-reset-button="reset"
@@ -65,7 +65,7 @@
           <label for="inputTitle" class="col-xs-2 control-label">结束时间：</label>
           <div class="col-xs-4">
             <datepicker
-            :value.sync="finishTime"
+            :value.sync="items.finishTime"
             :disabled-days-of-Week="disabled"
             :format="format.toString()"
             :show-reset-button="reset"
@@ -101,7 +101,7 @@
         <div class="form-group">
           <label for="inputTitle" class="col-xs-2 control-label">任务总价：</label>
           <div class="col-xs-4">
-            <input type="text" class="form-control" id="inputTitle" placeholder="请输入任务名称">
+            <input type="text" class="form-control" id="inputTitle" v-model="items.totalPrice">
           </div>
         </div>
         <div class="form-group">
@@ -188,6 +188,7 @@ export default {
   },
   data () {
     return {
+      url:urlConf.missions.new,
       submitType:"发布",
       submitSuccess:false,
       planOptions: [
@@ -195,14 +196,14 @@ export default {
         {value:'weibo', label:'微博'}
       ],
       disabled: [],
-      beginTime: 'Oct/06/2015',
-      finishTime: 'Oct/06/2016',
-      strategy:'',
       format: ['MMM/dd/yyyy'],
       reset: true,
       alertSuccess: false,
       alertError: false,
       items: {
+        id:false,
+        beginTime: 'Oct/06/2015',
+        finishTime: 'Oct/06/2016',
         title: '',
         description: '',
         price:100,
@@ -230,27 +231,27 @@ export default {
       let items = {
         'task_name': this.items.title,
   			'task_desc': this.items.description,
-  			'task_starttime': this.beginTime,
-  			'task_endtime': this.finishTime,
+  			'task_starttime': this.items.beginTime,
+  			'task_endtime': this.items.finishTime,
   			'task_price': this.items.price,
   			'task_sharecount': this.items.amount,
   			'task_sharechannel': this.items.plan[0],
-  			'task_media': iframe.$('#trumbowyg').trumbowyg('html'),
+  			'task_media': utoa(iframe.$('#trumbowyg').trumbowyg('html')),
         'uid': localStorage.getItem('id_user'),
         'scode':localStorage.getItem('id_token')
       }
-      console.log(items)
+      if(this.items.id){
+        items.task_id = this.items.id
+      }
       // items.doc = iframe.$('#trumbowyg').trumbowyg('html')
-      this.$http.post(urlConf.missions.new,items)
+      this.$http.post(this.url,items)
       .then( (res) => {
-        console.log(res)
         if(res.data.msg === 'success' )
         {
           this.alertSuccess = !!(this.success = '发布成功')
           this.xhrLock = false
           this.submitSuccess = true
           setTimeout( function(){
-            console.log(router.go)
             router.go({name:"missions"})
           }, 3500)
         } else {

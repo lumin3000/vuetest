@@ -64,6 +64,7 @@ export default {
 
   logout () {
     localStorage.removeItem('id_token')
+    localStorage.removeItem('id_user')
     this.user.authenticated = false
   },
 
