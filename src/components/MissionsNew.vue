@@ -48,34 +48,8 @@
             ></textarea>
           </div>
         </div>
-
         <div class="form-group">
-          <label for="inputTitle" class="col-xs-2 control-label">开始时间：</label>
-          <div class="col-xs-4">
-            <datepicker
-            :value.sync="items.beginTime"
-            :disabled-days-of-Week="disabled"
-            :format="format.toString()"
-            :show-reset-button="reset"
-            width="100%">
-            </datepicker>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputTitle" class="col-xs-2 control-label">结束时间：</label>
-          <div class="col-xs-4">
-            <datepicker
-            :value.sync="items.finishTime"
-            :disabled-days-of-Week="disabled"
-            :format="format.toString()"
-            :show-reset-button="reset"
-            width="100%">
-            </datepicker>
-          </div>
-        </div>
-        <div class="space30 col-xs-12">&nbsp;</div>
-        <div class="form-group">
-          <label for="inputTitle" class="col-xs-2 control-label">任务单价：</label>
+          <label for="inputPrice" class="col-xs-2 control-label">任务单价：</label>
           <div class="col-xs-4">
             <input
             type="text"
@@ -87,7 +61,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="inputTitle" class="col-xs-2 control-label">推广数量：</label>
+          <label for="inputAmount" class="col-xs-2 control-label">推广数量：</label>
           <div class="col-xs-4">
             <input
             type="text"
@@ -99,9 +73,39 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="inputTitle" class="col-xs-2 control-label">任务总价：</label>
+          <label class="col-xs-2 control-label">任务总价：</label>
           <div class="col-xs-4">
-            <input type="text" class="form-control" id="inputTitle" v-model="items.totalPrice">
+            <input type="text" class="form-control" v-model="totalPrice" disabled >
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputFinishTime" class="col-xs-2 control-label">任务时间：</label>
+          <div class="col-xs-4">
+            <div class="col-xs-5 times" :class="(items.beginTime?'':'hide')">
+              <input class="form-control" disabled v-model="items.beginTime">
+            </div>
+            <div class="col-xs-1 time2" :class="(items.beginTime?'':'hide')"><span>至</span></div>
+            <div class="times" :class="(items.beginTime?'col-xs-6':'')">
+              <datepicker
+              :value.sync="items.finishTime"
+              :disabled-days-of-Week="disabled"
+              :format="format.toString()"
+              width="100%">
+              </datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="space0 col-xs-12">&nbsp;</div>
+        <div class="form-group">
+          <label for="inputLink" class="col-xs-2 control-label">任务链接：</label>
+          <div class="col-xs-4">
+            <input
+            id="inputLink"
+            type="text"
+            class="form-control"
+            placeholder="发布任务链接时将自动忽略任务素材"
+            v-model="items.link"
+            >
           </div>
         </div>
         <div class="form-group">
@@ -158,6 +162,11 @@ import datepicker from './vuetrap/Datepicker'
 import vSelect from './vuetrap/Select'
 import vOption from './vuetrap/Option'
 import {router} from '../main'
+import Validator from 'validator'
+
+let zeroize = function(str){
+  return ((str+'').length === 1)?('0' + str):(''+str)
+}
 
 export default {
   name:"missionsNew",
@@ -168,22 +177,31 @@ export default {
     datepicker
   },
   route:{
-    canActivate() {
+    canActivate () {
       return auth.user.authenticated
+    },
+    data (transition){
+      let today = new Date()
+      this.items = {
+          id:false,
+          beginTime: false,
+          finishTime: `${today.getFullYear()}-${zeroize(today.getMonth()+2)}-${zeroize(today.getDate())}`,
+          title: '',
+          description: '',
+          price:100,
+          amount:100,
+          plan:['2'],
+          link:'',
+          doc:''
+      }
+      transition.next()
     },
     deactivate (transition) {
       this.error = false
-      if (this.submitSuccess === true){
-        return transition.next()
-      }
-      if ( iframe.$('#trumbowyg').trumbowyg('html') != this.items.doc){
-        this.alertError = !!(this.error = "新内容或已修改的内容还没发布，无法离开")
-        transition.abort()
-      } else {
-        top.editorDocker.closeFullscreen()
-        iframe.$('#trumbowyg').trumbowyg('destroy')
-        transition.next()
-      }
+      this.success = false
+      top.editorDocker.closeFullscreen()
+      iframe.$('#trumbowyg').trumbowyg('destroy')
+      transition.next()
     }
   },
   data () {
@@ -192,56 +210,65 @@ export default {
       submitType:"发布",
       submitSuccess:false,
       planOptions: [
-        {value:'weixin', label:'微信'},
-        {value:'weibo', label:'微博'}
+        {value:'2', label:'微信'},
+        {value:'1', label:'微博'}
       ],
       disabled: [],
-      format: ['MMM/dd/yyyy'],
+      format: ['yyyy-MM-dd'],
       reset: true,
       alertSuccess: false,
       alertError: false,
       items: {
         id:false,
-        beginTime: 'Oct/06/2015',
-        finishTime: 'Oct/06/2016',
+        link:'',
+        beginTime: false,
+        finishTime: '2016-01-02',
         title: '',
         description: '',
-        price:100,
-        amount:100,
-        plan:['weinxin'],
+        price:0,
+        amount:0,
+        plan:['2'],
         doc:''
       },
       error: '',
       success: ''
     }
   },
-
+  computed: {
+    totalPrice () {
+      return this.items.price * this.items.amount
+    }
+  },
   methods: {
+    getTaskMedia (){
+      let dom = iframe.$('#trumbowyg')
+      return dom.trumbowyg('html') || dom.html()
+    },
     preview (){
       var doc=1234
     },
     submit () {
       if(this.xhrLock === true)
       {
-        console.log('双击')
         return false;
       }
       this.error = false
       this.success = false
+
       let items = {
         'task_name': this.items.title,
   			'task_desc': this.items.description,
-  			'task_starttime': this.items.beginTime,
   			'task_endtime': this.items.finishTime,
   			'task_price': this.items.price,
   			'task_sharecount': this.items.amount,
   			'task_sharechannel': this.items.plan[0],
-  			'task_media': utoa(iframe.$('#trumbowyg').trumbowyg('html')),
+  			'task_media': ((this.items.link)?'':this.getTaskMedia()),
+        'task_share_link':(this.items.link || ''),
         'uid': localStorage.getItem('id_user'),
         'scode':localStorage.getItem('id_token')
       }
       if(this.items.id){
-        items.task_id = this.items.id
+        items.tid = this.items.id
       }
       // items.doc = iframe.$('#trumbowyg').trumbowyg('html')
       this.$http.post(this.url,items)
@@ -260,7 +287,6 @@ export default {
         }
 
       }, (err) => {
-        console.log("missionsNew.submit().$http.post.error:"+err)
         this.alertError = !!(this.error = '网站服务出现错误')
         this.xhrLock = false
       });
@@ -327,5 +353,16 @@ export default {
   }
   .datepicker{
     width:100%;
+  }
+  .times {
+    padding:0px
+  }
+  .times input {
+    padding-right:0px
+  }
+  .time2 {
+    line-height: 40px;
+    padding:0px;
+    text-align: center
   }
 </style>

@@ -23,7 +23,7 @@
     <script src=/static/jquery.1.11.3.min.js ></script>
     <script src=/static/trumbowyg/trumbowyg.min.js ></script>
     <script src=/static/trumbowyg/langs/zh_cn.min.js ></script>
-    <script src="/static/trumbowyg/plugins/colors/trumbowyg.colors.js"></script>
+    <script src="/static/trumbowyg/plugins/colors/trumbowyg.colors.min.js"></script>
     <script src="/static/trumbowyg/plugins/upload/trumbowyg.upload.min.js"></script>
     <div id=trumbowyg></div>
     <script>
@@ -49,14 +49,22 @@
                 ['horizontalRule'],
                 ['removeformat'],
                 ['fullscreen']
-            ]
+            ],
+            plugins: {
+                // Add imagur parameters to upload plugin
+                upload: {
+                    serverPath: top.urlConf.upload,
+                    fileFieldName: 'img',
+                    urlPropertyName: 'items',
+                    statusPropertyName:'items'
+                }
+            }
         });
         window.setHtml = function(html){
           $('#trumbowyg').trumbowyg('html', html);
         };
         var docker = top.editorDocker;
         setHtml(docker.initHtml());
-        editor.data('trumbowyg').o.plugins.upload.serverPath = window.localStorage.getItem('uploadUrl');
         editor.on('tbwopenfullscreen',docker.fullscreen);
         editor.on('tbwclosefullscreen',docker.closeFullscreen);
         top.iframe=window;

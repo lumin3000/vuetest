@@ -140,15 +140,19 @@ export default {
         }
         this.items = []
         this.itemsStore = []
+        let strategy = {
+          '1':'微博',
+          '2':'微信'
+        }
         let items = res.data.items.reverse().map(function(o){
           return {
             id:o.t_id,
             title:o.t_name,
             unitPrice:o.t_price,
-            status:o.t_status,
+            status:((parseInt(o.t_status) === 0)?'未完成':'已完成'),
             beginTime:o.t_start_time,
             finishTime:o.t_end_time,
-            strategy:o.t_type,
+            strategy:strategy[o.t_type+''],
             amount:o.t_limit,
             remain:o.t_join_user,
             totalPrice:(o.t_price * o.t_limit)

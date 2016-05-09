@@ -2,9 +2,9 @@
   <center id="wraper">
     <nav class="navbar navbar-default" v-bind:class="ShowNavbar">
       <div class="navbar-header">
-        <a v-link="{name:'panel'}">管理系统</a>
+        <a v-link="{name:'panel'}">触享</a>
       </div>
-      <div class="nav-userinfo">您好，tom，<a @click="logout()">退出</a></div>
+      <div class="nav-userinfo"><span @click="logout()" title="退出系统" class="glyphicon glyphicon-log-out"></span></div>
     </nav>
 
     <div class="app-wraper">
@@ -27,7 +27,7 @@
     </div>
 
     <div class="footer">
-      <p>版权信息 和 备案号</p>
+      <p>2016 copyright</p>
     </div>
 </center>
 </template>
@@ -369,7 +369,7 @@ a.without-underline:hover {
   right:0px;
   font-size:18px
 }
-.nav-userinfo a,.nav-userinfo a:hover{
+.nav-userinfo a,.nav-userinfo a:hover, .nav-userinfo span{
   color:white;
   cursor: pointer
 }
@@ -458,6 +458,13 @@ div.inputGender *{
   font-weight: 200;
   text-align: center;
   margin-bottom:60px;
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #f3f4f6;
+  opacity: 1;
 }
 
 </style>

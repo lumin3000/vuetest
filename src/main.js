@@ -16,7 +16,8 @@ window.urlConf = {
     edit: false
   },
   report: false,
-  account: false
+  account: false,
+  upload: `${window.uri}/openapi/upload/upimg`
 }
 
 // /task/info/fortune   这个临时放这里了，余额

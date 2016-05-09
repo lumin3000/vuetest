@@ -16,21 +16,20 @@ export default {
       }
       this.$http.post(urlConf.missions.show,params)
       .then((res) => {
-        console.log(res)
         this.items = ([res.data.items].map(function(o){
           return {
             id:o.t_id,
             title:o.t_name,
+            description:o.t_desc,
             price:o.t_price,
             status:o.t_status,
-            beginTime:o.t_start_time,
+            beginTime:o.t_release_time.split(' ')[0],
             finishTime:o.t_end_time,
-            strategy:o.t_type,
             amount:o.t_limit,
+            link:o.t_share_link,
             remain:o.t_join_user,
-            totalPrice:(o.t_price * o.t_limit),
-            doc:atou(o.t_material),
-            plan:['weinxin']
+            doc:o.t_material,
+            plan:[(o.t_type+'')]
           }
         }))[0]
 
@@ -47,23 +46,24 @@ export default {
       url:urlConf.missions.edit,
       submitType:"保存并发布",
       planOptions: [
-        {value:'weixin', label:'微信'},
-        {value:'weibo', label:'微博'}
+        {value:'2', label:'微信'},
+        {value:'1', label:'微博'}
       ],
       disabled: [],
-      format: ['MMM/dd/yyyy'],
+      format: ['yyyy-MM-dd'],
       reset: true,
       alertError: false,
       alertSuccess:false,
       items: {
         id:false,
-        beginTime: 'Oct/06/2015',
-        finishTime: 'Oct/06/2016',
+        beginTime:'2016-01-01',
+        finishTime: '2016-01-01',
         title: '',
         description: '',
         price:100,
         amount:100,
-        plan:['weinxin'],
+        plan:['2'],
+        link:'',
         doc:''
       },
       error: '',
