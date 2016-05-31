@@ -37,7 +37,7 @@
       v-bind:multiple='false'
       v-bind:auto-upload='true'
       label="编辑执照照片"
-      url="http://lexiang.7maker.cn/file/upload/companylicence"
+      v-bind:url = "uploadUrl"
       v-bind:filters = "filters"
       v-bind:events = 'cbEvents'
       v-bind:request-options = "reqopts"
@@ -185,6 +185,9 @@ export default {
     }
   },
   methods:{
+    uploadUrl (){
+      return urlConf.uploadLicence
+    },
     onStatus (file){
       if(file.isSuccess){
         return "上传成功";

@@ -1,5 +1,5 @@
 
-window.uri = 'http://lexiang.7maker.cn'
+window.uri = 'http://open.chudianyun.com'
 window.urlConf = {
   missions: {
     list: `${window.uri}/task/info/listpub`,
