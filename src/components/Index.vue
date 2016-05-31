@@ -5,12 +5,6 @@
         <slider>
           <img src="/static/pic/index1.jpg">
         </slider>
-        <slider>
-          <img src="http://placehold.it/1920x780?text=two">
-        </slider>
-        <slider>
-          <img src="http://placehold.it/1920x780?text=three">
-        </slider>
       </carousel>
     </div>
     <table class="index-table">
@@ -37,12 +31,31 @@ import carousel from './vuetrap/Carousel'
 import slider from './vuetrap/Slider'
 
 
+
 export default {
   name:"panel",
   components:{
     alert,
     slider,
     carousel
+  },
+  route: {
+    data (transition){
+      ['panelbar','app-footer','navbar'].forEach(function(el){
+        document.getElementById(el).style.visibility = 'hidden'
+      })
+      document.getElementById('app-wraper').style.backgroundColor = 'white'
+      document.getElementById('app-wraper').style.backgroundPosition = '-300px'
+      transition.next()
+    },
+    deactivate (transition){
+      ['panelbar','app-footer','navbar'].forEach(function(el){
+        document.getElementById(el).style.visibility = 'visible'
+      })
+      document.getElementById('app-wraper').style.backgroundColor = '#e8e8e8'
+      document.getElementById('app-wraper').style.backgroundPosition = '0px'
+      transition.next()
+    }
   },
   data () {
     return {
@@ -61,6 +74,11 @@ export default {
 </script>
 
 <style scoped>
+div.appblanker-container{
+  position: absolute;
+  background-color: white;
+  height:auto
+}
 .btn-block{
     background: transparent;
     height: 100%;
@@ -72,9 +90,5 @@ export default {
 .btn.focus {
   color: black;
   text-decoration: none;
-}
-
-.footer{
-  height:50%
 }
 </style>

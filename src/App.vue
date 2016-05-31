@@ -1,6 +1,6 @@
 <template>
   <center id="wraper">
-    <nav class="navbar navbar-default" v-bind:class="ShowNavbar">
+    <nav class="navbar navbar-default" v-bind:class="ShowNavbar" id="navbar">
       <div class="navbar-header">
         <a v-link="{name:'panel'}">触享</a>
       </div>
@@ -10,8 +10,8 @@
       </div>
     </nav>
 
-    <div class="app-wraper">
-      <div class="panelbar">
+    <div class="app-wraper" id="app-wraper">
+      <div class="panelbar" id="panelbar">
         <div class="container">
           <a v-link="{name:'missions'}" class="menu">&nbsp;</a>
           <a v-link="{name:'account'}" class="menu">&nbsp;</a>
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="footer">
+    <div class="footer" id="app-footer" >
       <p>2016 copyright</p>
     </div>
 </center>
@@ -320,7 +320,6 @@ a.without-underline:hover {
 }
 
 .appblanker{
-  margin-top:145px;
   background: white;
   padding:50px;
   width:756px;
@@ -491,15 +490,9 @@ div.iframePreview + div .btn-primary{
   display: none
 }
 .index-container{
-  width:1920px;
-  height:780px;
-  position: absolute;
-  left: -9999px;
-  right: -9999px;
   margin: auto;
 }
 .index-table{
-  margin-top: 780px;
   width:100%;
 }
 .index-table td{
@@ -519,4 +512,29 @@ div.iframePreview + div .btn-primary{
 .index-table td:nth-of-type(2){
   background-image: url('/static/pic/indexbanner2.gif')
 }
+
+@media (min-height: 600px) {
+  .appblanker{
+    margin-top:5%;
+  }
+}
+
+@media (min-height: 768px) {
+  .appblanker{
+    margin-top:10%;
+  }
+}
+
+@media (min-height: 1024px) {
+  .appblanker{
+    margin-top:15%;
+  }
+}
+
+@media (min-height: 1200px) {
+  .appblanker{
+    margin-top:20%;
+  }
+}
+
 </style>
