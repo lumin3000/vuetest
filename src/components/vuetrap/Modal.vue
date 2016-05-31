@@ -12,7 +12,7 @@
         <slot name="modal-header">
           <div class="modal-header">
             <button type="button" class="close" @click="close"><span>&times;</span></button>
-            <h4 class="modal-title" > 
+            <h4 class="modal-title" >
               <slot name="title">
                 {{title}}
               </slot>
@@ -42,11 +42,11 @@ import coerceBoolean from './utils/coerceBoolean.js'
     props: {
       okText: {
         type: String,
-        default: 'Save changes'
+        default: '确定'
       },
       cancelText:{
         type: String,
-        default: 'Close'
+        default: '关闭'
       },
       title: {
         type: String,

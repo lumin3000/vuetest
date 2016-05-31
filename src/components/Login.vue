@@ -22,7 +22,7 @@
       </div>
       <button class="btn btn-primary" @click="submit()">登录</button>
       <div class="form-group">
-        <a v-link="{name:'signup'}">注册新用户</a> ｜ <a>忘记密码</a>？
+        <a v-link="{name:'signup'}">注册新用户</a> ｜ <a v-link="{name:'index'}">返回首页</a>
       </div>
     </div>
     <alert

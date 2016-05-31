@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="inputFinishTime" class="col-xs-2 control-label">任务时间：</label>
+          <label for="inputFinishTime" class="col-xs-2 control-label">{{items.beginTime?'任务周期':'结束时间'}}：</label>
           <div class="col-xs-4">
             <div class="col-xs-5 times" :class="(items.beginTime?'':'hide')">
               <input class="form-control" disabled v-model="items.beginTime">
@@ -133,6 +133,10 @@
         </center>
       </div>
     </div>
+    <modal title="预览任务素材" :show.sync="largeModal" large>
+      <div slot="modal-body" class="modal-body iframePreview" id="iframePreview">
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -161,6 +165,7 @@ import alert from './vuetrap/Alert'
 import datepicker from './vuetrap/Datepicker'
 import vSelect from './vuetrap/Select'
 import vOption from './vuetrap/Option'
+import modal from './vuetrap/Modal'
 import {router} from '../main'
 import Validator from 'validator'
 
@@ -168,13 +173,15 @@ let zeroize = function(str){
   return ((str+'').length === 1)?('0' + str):(''+str)
 }
 
+
 export default {
   name:"missionsNew",
   components:{
     vSelect,
     vOption,
     alert,
-    datepicker
+    datepicker,
+    modal
   },
   route:{
     canActivate () {
@@ -214,6 +221,7 @@ export default {
         {value:'1', label:'微博'}
       ],
       disabled: [],
+      largeModal: false,
       format: ['yyyy-MM-dd'],
       reset: true,
       alertSuccess: false,
@@ -244,8 +252,30 @@ export default {
       let dom = iframe.$('#trumbowyg')
       return dom.trumbowyg('html') || dom.html()
     },
+    prev (){
+      console.log('hi')
+    },
     preview (){
-      var doc=1234
+      let logFrameEvent = function (frame, eventName){
+          console.log(
+              "eventName"      , eventName,
+              "frame.resolved" , frame.resolved,
+              "document.body"  , frame.document && frame.document.body
+          )
+      }
+
+      let listeners = {
+          'onBeforeAppend'    : logFrameEvent,
+          'onAfterAppend'     : logFrameEvent,
+          'onBeforePopulate'  : logFrameEvent,
+          'onAfterPopulate'   : logFrameEvent
+      }
+
+      let container = document.getElementById('iframePreview')
+      container.innerHTML = ''
+      let html      = `<html><head><meta charset=utf-8></head><body>${this.getTaskMedia()}</body></html>`
+      iframer(container, html, listeners)
+      this.largeModal = true
     },
     submit () {
       if(this.xhrLock === true)

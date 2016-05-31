@@ -1,3 +1,4 @@
+
 window.uri = 'http://lexiang.7maker.cn'
 window.urlConf = {
   missions: {
@@ -7,17 +8,25 @@ window.urlConf = {
     edit: `${window.uri}/task/publish/update`,
     remove: false
   },
+  password: {
+    change: `${window.uri}/user/password/change`
+  },
   profileUser: {
-    show: false,
-    edit: false
+    show: `${window.uri}/user/info`,
+    edit: `${window.uri}/user/info/set`
   },
   profileEnterprise: {
-    show: false,
-    edit: false
+    show: `${window.uri}/user/info/companyinfo`,
+    edit: `${window.uri}/user/info/set`
   },
   report: false,
-  account: false,
-  upload: `${window.uri}/openapi/upload/upimg`
+  account: {
+    fortune: `${window.uri}/task/info/fortune`,
+    income: `${window.uri}/task/info/income`
+  },
+  upload: `${window.uri}/openapi/upload/upimg`,
+  uploadAvatar: `${window.uri}/file/upload/userhead`,
+  uploadLicence: `${window.uri}/file/upload/companylicence`
 }
 
 // /task/info/fortune   这个临时放这里了，余额
@@ -47,8 +56,11 @@ import MissionsEditView from './components/MissionsEdit'
 import AccountView from './components/Account'
 import ProfileUserView from './components/ProfileUser'
 import ProfileEnterpriseView from './components/ProfileEnterprise'
+import ChangePasswordView from './components/ChangePassword'
 import ReportView from './components/Report'
 import PanelView from './components/Panel'
+import WemediaView from './components/WemediaView'
+import IndexView from './components/Index'
 import BlankView from './components/Blank'
 
 Vue.use(Router)
@@ -80,7 +92,10 @@ const RouterMap = {
   '/profileuser': {component: ProfileUserView},
   '/profileenterprise': {component: ProfileEnterpriseView},
   '/report': {component: ReportView},
+  '/wemedia': {component: WemediaView},
+  '/changepassword': {component: ChangePasswordView},
   '/panel': {component: PanelView},
+  '/index': {component: IndexView},
   '/blank': {component: BlankView}
 }
 Object.keys(RouterMap).forEach(function (key) {

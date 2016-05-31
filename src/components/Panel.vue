@@ -19,15 +19,16 @@ export default {
   route: {
     data (transition) {
       if(auth.user.authenticated){
-        transition.next()
+        router.go({name:"missions"})
+        // transition.next()
       }else {
-        router.go({name:"login"})
+        router.go({name:"index"})
       }
     }
   },
   data () {
     return {
-      
+
     }
   },
   methods: {

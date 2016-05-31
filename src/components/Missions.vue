@@ -55,7 +55,7 @@
             <td class="text-right">{{item.totalPrice}}</td>
               <td class="text-right">
                 <button class="btn btn-primary" @click="routerGo({name:'missions-edit',params:{missionId:item.id}})" >编辑</button>
-                <button class="btn btn-danger" @click="removeMissionConfirm(item.id)">删除</button>
+                <!-- <button class="btn btn-danger" @click="removeMissionConfirm(item.id)">删除</button> -->
               </td>
           </tr>
         </tbody>
@@ -98,24 +98,6 @@
   </div>
 </template>
 <script>
-/*
-top.fakeMissions = []
-for(let i=1;i<=100;i++)
-{
-  fakeMissions.push({
-    id:parseInt(1000*Math.random())+10000,
-    title:'任务'+i,
-    status:(!!(i%3))?'进行中':"已完成",
-    beginTime:"2016-04-12 12:20",
-    finishTime:"2016-05-12 12:20",
-    strategy:(!!(i%3))?'微博':"微信",
-    unitPrice:parseInt(10*Math.random())+2,
-    amount:parseInt(20*Math.random())+20,
-    remain:parseInt(18*Math.random())+10,
-    totalPrice:parseInt(200*Math.random())+50
-  })
-}
-*/
 
 import alert from './vuetrap/Alert'
 import {router} from '../main'

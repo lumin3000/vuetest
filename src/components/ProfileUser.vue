@@ -37,7 +37,7 @@
       v-bind:multiple='false'
       v-bind:auto-upload='true'
       label="编辑"
-      url="http://lexiang.7maker.cn/openapi/upload/upimg"
+      url='http://lexiang.7maker.cn/file/upload/userhead'
       v-bind:filters = "filters"
       v-bind:events = 'cbEvents'
       v-bind:request-options = "reqopts"
@@ -49,13 +49,6 @@
         <label for="inputNick" class="text-right col-xs-4 control-label">昵称：</label>
         <div class="col-xs-8">
           <input v-model="user.nick" type="text" class="form-control" id="inputNick">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="inputName" class="text-right col-xs-4 control-label">姓名：</label>
-        <div class="col-xs-8">
-          <input v-model="user.name" type="text" class="form-control" id="inputName">
         </div>
       </div>
 
@@ -72,13 +65,6 @@
       </div>
 
       <div class="form-group">
-        <label for="inputWeixin" class="text-right col-xs-4 control-label">微信号：</label>
-        <div class="col-xs-8">
-          <input v-model="user.weixin" type="text" class="form-control" id="inputWeixin">
-        </div>
-      </div>
-
-      <div class="form-group">
         <label for="inputMail" class="text-right col-xs-4 control-label">邮箱：</label>
         <div class="col-xs-8">
           <input v-model="user.mail" type="text" class="form-control" id="inputMail">
@@ -86,9 +72,23 @@
       </div>
 
       <div class="form-group">
+        <label for="inputWeixin" class="text-right col-xs-4 control-label">微信号：</label>
+        <div class="col-xs-8">
+          <input disabled placeholder="请联系客服绑定微信帐号" v-model="user.weixin" type="text" class="form-control" id="inputWeixin">
+        </div>
+      </div>
+
+      <div class="form-group visibility-hidden">
         <label for="inputPhone" class="text-right col-xs-4 control-label">手机：</label>
         <div class="col-xs-8">
           <input v-model="user.phone" type="text" class="form-control" id="inputPhone">
+        </div>
+      </div>
+
+      <div class="form-group visibility-hidden">
+        <label for="inputName" class="text-right col-xs-4 control-label">姓名：</label>
+        <div class="col-xs-8">
+          <input v-model="user.name" type="text" class="form-control" id="inputName">
         </div>
       </div>
 
@@ -107,6 +107,7 @@ import alert from './vuetrap/Alert'
 import vSelect from './vuetrap/Select'
 import vOption from './vuetrap/Option'
 import VueFileUpload from 'vue-file-upload'
+import {router} from '../main'
 
 export default {
   name:"ProfileUser",
@@ -118,11 +119,22 @@ export default {
   },
   route: {
     data (transition) {
-      let url = urlConf.profileUser.show
-      this.$http[url?'post':'get'](url || '/static/fakeuser.json')
+      let params = {
+        scode:localStorage.getItem('id_token'),
+        uid:localStorage.getItem('id_user')
+      }
+      this.$http[this.url?'post':'get'](this.url || '/static/fakeuser.json', params)
       .then( (res) => {
-        res.data.user.gender = [res.data.user.gender]
-        this.user = res.data.user
+        let u = res.data.items
+        // res.data.user.gender = [res.data.user.sex || 'm']
+        this.user = {
+          nick: u.uname || '',
+          gender: [u.sex || 'm'],
+          avatar: u.face || false,
+          mail: u.mail || '',
+          weixin: u.weixin || '',
+          phone: u.phone || ''
+        }
         transition.next()
       }, (err) => {
         this.alertError = !!(this.error = '网站服务出现错误')
@@ -132,15 +144,18 @@ export default {
   },
   data(){
     return{
+      url:urlConf.profileUser.show,
+      urlEdit:urlConf.profileUser.edit,
       alertError: false,
       alertSuccess: false,
+      error:false,
+      success:false,
       planOptions: [
         {value:'m', label:'男'},
         {value:'f', label:'女'}
       ],
       user:{
         nick:'',
-        name:'',
         gender:['m'],
         weixin:'',
         mail:'',
@@ -160,9 +175,22 @@ export default {
       //回调函数绑定
       cbEvents:{
         onCompleteUpload:(file,res,status,header)=>{
-          this.user.avatar = res.items
-          console.log("finish upload;")
+          if(res.items.imgUrl)
+          {
+            this.user.avatar = res.items.imgUrl
+          }
+          else {
+            this.alertError = !!(this.error = res.msg)
+          }
         }
+      },
+      reqopts:{
+        formData:{
+          scode:localStorage.getItem('id_token'),
+          uid:localStorage.getItem('id_user')
+        },
+        responseType:'json',
+        withCredentials:false
       }
     }
   },
@@ -171,14 +199,39 @@ export default {
       if(file.isSuccess){
         return "上传成功";
       }else if(file.isError){
-        return "上传失败";
+        return this.alertError = !!(this.error = '上传失败')
       }
     },
     changePassword (){
-
+      router.go({name:'changepassword'})
     },
     submit (){
+      this.error = false
+      this.success = false
 
+      let user = {
+        'uname': this.user.nick,
+  			'sex': this.user.gender[0],
+  			'mail': this.user.mail,
+  			'weixin': this.user.weixin,
+        'phone': this.user.phone,
+        'uid': localStorage.getItem('id_user'),
+        'scode':localStorage.getItem('id_token')
+      }
+
+      this.$http.post(this.urlEdit,user)
+      .then( (res) => {
+        if(res.data.msg === 'success' )
+        {
+          this.alertSuccess = !!(this.success = '个人信息修改已经保存')
+
+        } else {
+          this.alertError = !!(this.error = res.data.msg)
+        }
+
+      }, (err) => {
+        this.alertError = !!(this.error = '网站服务出现错误')
+      });
     }
   }
 }

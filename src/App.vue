@@ -4,7 +4,10 @@
       <div class="navbar-header">
         <a v-link="{name:'panel'}">触享</a>
       </div>
-      <div class="nav-userinfo"><span @click="logout()" title="退出系统" class="glyphicon glyphicon-log-out"></span></div>
+      <div class="nav-userinfo">
+        <span  v-if="true" @click="logout()" title="退出系统" class="glyphicon glyphicon-log-out"></span>
+        <a v-else v-link="{name:'login'}">请先登录</a>
+      </div>
     </nav>
 
     <div class="app-wraper">
@@ -44,9 +47,12 @@ export default {
   },
 
   methods: {
+    authed(){
+      return localStorage.getItem('id_token') || false
+    },
     logout() {
       auth.logout()
-      router.go({name:"login"})
+      router.go({name:"index"})
     }
   }
 }
@@ -60,11 +66,16 @@ body {
   background-color: white;
 }
 
+.visibility-hidden {
+  visibility:hidden
+}
+
 .footer{
   line-height:120px;
   color:#c0c0c0;
   font-size: 18px;
   font-weight: 100;
+  background-color: white
 }
 
 .navbar {
@@ -466,5 +477,46 @@ fieldset[disabled] .form-control {
   background-color: #f3f4f6;
   opacity: 1;
 }
+.iframePreview iframe{
+  width:100%;
+  height:500px;
+  border:0px;
+}
 
+.modal-content, .modal-header, .modal-footer{
+  background-color:white;
+}
+
+div.iframePreview + div .btn-primary{
+  display: none
+}
+.index-container{
+  width:1920px;
+  height:780px;
+  position: absolute;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+}
+.index-table{
+  margin-top: 780px;
+  width:100%;
+}
+.index-table td{
+  width:50%;
+  text-align: center;
+  height:180px;
+  background-color: #ebebeb;
+  border:4px solid white;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+.index-table td:nth-of-type(1){
+  background-image: url('/static/pic/indexbanner1.gif')
+}
+
+.index-table td:nth-of-type(2){
+  background-image: url('/static/pic/indexbanner2.gif')
+}
 </style>

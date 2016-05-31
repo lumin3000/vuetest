@@ -37,7 +37,7 @@
       v-bind:multiple='false'
       v-bind:auto-upload='true'
       label="编辑执照照片"
-      url="http://lexiang.7maker.cn/openapi/upload/upimg"
+      url="http://lexiang.7maker.cn/file/upload/companylicence"
       v-bind:filters = "filters"
       v-bind:events = 'cbEvents'
       v-bind:request-options = "reqopts"
@@ -53,23 +53,9 @@
       </div>
 
       <div class="form-group">
-        <label for="inputPhone" class="text-right col-xs-4 control-label">公司电话：</label>
-        <div class="col-xs-8">
-          <input v-model="enterprise.phone" type="text" class="form-control" id="inputPhone">
-        </div>
-      </div>
-
-      <div class="form-group">
         <label for="inputAddress" class="text-right col-xs-4 control-label">公司地址：</label>
         <div class="col-xs-8 inputGender" >
           <input v-model="enterprise.address" type="text" class="form-control" id="inputAddress">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="inputDescription" class="text-right col-xs-4 control-label">公司简介：</label>
-        <div class="col-xs-8">
-          <input v-model="enterprise.description" type="text" class="form-control" id="inputDescription">
         </div>
       </div>
 
@@ -80,14 +66,30 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group visibility-hidden">
         <label for="inputWebsite" class="text-right col-xs-4 control-label">官网链接：</label>
         <div class="col-xs-8">
           <input v-model="enterprise.website" type="text" class="form-control" id="inputWebsite">
         </div>
       </div>
 
+      <div class="form-group visibility-hidden">
+        <label for="inputDescription" class="text-right col-xs-4 control-label">公司简介：</label>
+        <div class="col-xs-8">
+          <input v-model="enterprise.description" type="text" class="form-control" id="inputDescription">
+        </div>
+      </div>
+
+      <div class="form-group visibility-hidden">
+        <label for="inputPhone" class="text-right col-xs-4 control-label">公司电话：</label>
+        <div class="col-xs-8">
+          <input v-model="enterprise.phone" type="text" class="form-control" id="inputPhone">
+        </div>
+      </div>
+
+
     </div>
+
 
     <center class="col-xs-12 btn-lg-group">
       <button class="btn btn-lg btn-primary" @click="submit()">提交审核</button>
@@ -108,10 +110,23 @@ export default {
   },
   route: {
     data (transition) {
-      let url = urlConf.profileEnterprise.show
-      this.$http[url?'post':'get'](url || '/static/fakeEnterprise.json')
+      let params = {
+        scode:localStorage.getItem('id_token'),
+        uid:localStorage.getItem('id_user')
+      }
+      this.$http[this.url?'post':'get'](this.url || '/static/fakeEnterprise.json',params)
       .then( (res) => {
-        this.enterprise = res.data.enterprise
+        if(!res.data.msg || res.data.msg!='success'){
+          this.alertError = !!(this.error = res.data.msg)
+        } else{
+          let item = res.data.items
+          this.enterprise = {
+            title: item.company_name || '',
+            address: item.address || '',
+            license: item.business_licence || '',
+            avatar: item.backimg || ''
+          }
+        }
         transition.next()
       }, (err) => {
         this.alertError = !!(this.error = '网站服务出现错误')
@@ -121,8 +136,12 @@ export default {
   },
   data(){
     return{
+      url:urlConf.profileEnterprise.show,
+      urlEdit:urlConf.profileEnterprise.edit,
       alertError: false,
       alertSuccess: false,
+      error: false,
+      success: false,
       enterprise:{
         title:'',
         phone:'',
@@ -145,9 +164,23 @@ export default {
       //回调函数绑定
       cbEvents:{
         onCompleteUpload:(file,res,status,header)=>{
-          this.user.avatar = res.items
-          console.log("finish upload;")
+          if(res.items.imgUrl)
+          {
+            this.enterprise.avatar = res.items.imgUrl
+            console.log('上传成功')
+          }
+          else {
+            this.alertError = !!(this.error = res.msg)
+          }
         }
+      },
+      reqopts:{
+        formData:{
+          scode:localStorage.getItem('id_token'),
+          uid:localStorage.getItem('id_user')
+        },
+        responseType:'json',
+        withCredentials:false
       }
     }
   },
@@ -156,14 +189,33 @@ export default {
       if(file.isSuccess){
         return "上传成功";
       }else if(file.isError){
-        return "上传失败";
+        return this.alertError = !!(this.error = '上传失败')
       }
     },
-    changePassword (){
-
-    },
     submit (){
+      this.error = false
+      this.success = false
+      let item = {
+        'company_name': this.enterprise.title,
+  			'address': this.enterprise.address,
+  			'business_licence': this.enterprise.license,
+        'uid': localStorage.getItem('id_user'),
+        'scode':localStorage.getItem('id_token')
+      }
 
+      this.$http.post(this.urlEdit,item)
+      .then( (res) => {
+        if(res.data.msg === 'success' )
+        {
+          this.alertSuccess = !!(this.success = '信息已经提交审核')
+
+        } else {
+          this.alertError = !!(this.error = res.data.msg)
+        }
+
+      }, (err) => {
+        this.alertError = !!(this.error = '网站服务出现错误')
+      });
     }
   }
 }
