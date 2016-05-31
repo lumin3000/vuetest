@@ -37,7 +37,7 @@
       v-bind:multiple='false'
       v-bind:auto-upload='true'
       label="编辑执照照片"
-      v-bind:url = "uploadUrl"
+      v-bind:url="uploadUrl()"
       v-bind:filters = "filters"
       v-bind:events = 'cbEvents'
       v-bind:request-options = "reqopts"

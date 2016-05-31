@@ -44,16 +44,28 @@ export default {
       ['panelbar','app-footer','navbar'].forEach(function(el){
         document.getElementById(el).style.visibility = 'hidden'
       })
-      document.getElementById('app-wraper').style.backgroundColor = 'white'
-      document.getElementById('app-wraper').style.backgroundPosition = '-300px'
+      let appWraperStyle = {
+        'backgroundColor': 'white',
+        'backgroundPosition': '-300px',
+        'minHeight': 'initial'
+      }
+      for (var key of Object.keys(appWraperStyle)) {
+        document.getElementById('app-wraper').style[key] = appWraperStyle[key]
+      }
       transition.next()
     },
     deactivate (transition){
       ['panelbar','app-footer','navbar'].forEach(function(el){
         document.getElementById(el).style.visibility = 'visible'
       })
-      document.getElementById('app-wraper').style.backgroundColor = '#e8e8e8'
-      document.getElementById('app-wraper').style.backgroundPosition = '0px'
+      let appWraperStyle = {
+        'backgroundColor': '#e8e8e8',
+        'backgroundPosition': '0px',
+        'minHeight': '800px'
+      }
+      for (var key of Object.keys(appWraperStyle)) {
+        document.getElementById('app-wraper').style[key] = appWraperStyle[key]
+      }
       transition.next()
     }
   },
