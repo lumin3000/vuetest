@@ -1,4 +1,6 @@
-# vuetest
+# vuetest 
+
+this project is for  mandarin(中文) only
 
 > VUE TEST BY Sjerrys
 
