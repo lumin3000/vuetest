@@ -1,6 +1,17 @@
 # vuetest
 
-> VUE TEST BY JERRY
+> VUE TEST BY Sjerrys
+
+file uploader, user auth, text editor, bootstrap stuff. 
+
+can be use with any kind of backend server: php, nodejs, java...
+
+npm install [vue-strap](https://github.com/yuche/vue-strap) is not working in vue-cli created project
+
+so I just put the vue-strap source-code in my src dir. 
+
+it is also easier for someone who want to make a vue-strap localize copy.
+
 
 ## Build Setup
 
