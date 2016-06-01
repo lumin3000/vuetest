@@ -41,31 +41,13 @@ export default {
   },
   route: {
     data (transition){
-      ['panelbar','app-footer','navbar'].forEach(function(el){
-        document.getElementById(el).style.visibility = 'hidden'
-      })
-      let appWraperStyle = {
-        'backgroundColor': 'white',
-        'backgroundPosition': '-300px',
-        'minHeight': 'initial'
-      }
-      for (var key of Object.keys(appWraperStyle)) {
-        document.getElementById('app-wraper').style[key] = appWraperStyle[key]
-      }
+      document.getElementById('navbar').style.visibility = 'hidden'
+      document.getElementById('app-wraper').style.minHeight = '0px'
       transition.next()
     },
     deactivate (transition){
-      ['panelbar','app-footer','navbar'].forEach(function(el){
-        document.getElementById(el).style.visibility = 'visible'
-      })
-      let appWraperStyle = {
-        'backgroundColor': '#e8e8e8',
-        'backgroundPosition': '0px',
-        'minHeight': '800px'
-      }
-      for (var key of Object.keys(appWraperStyle)) {
-        document.getElementById('app-wraper').style[key] = appWraperStyle[key]
-      }
+      document.getElementById('navbar').style.visibility = 'visible'
+      document.getElementById('app-wraper').style.minHeight = '800px'
       transition.next()
     }
   },

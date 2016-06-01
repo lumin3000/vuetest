@@ -1,4 +1,4 @@
-const API_URL = 'http://lexiang.7maker.cn'
+const API_URL = 'http://open.chudianyun.com'
 const LOGIN_URL = API_URL + '/user/login/email'
 const LOGIN_PHONE_URL = API_URL + '/user/login/mobile'
 const SIGNUP_URL = API_URL + '/user/register/email'

@@ -27,10 +27,10 @@
         <div v-if="extraInfo">
           {{{extraInfo}}}
         </div>
-        <div>{{{pageTitle.name}}}</div>
+        <div :class="(items && items.length>0)?'show':'hide'">{{{pageTitle.name}}}</div>
       </div>
 
-      <table class="table table-hover" v-if="items">
+      <table class="table table-hover" v-if="items && items.length && items.length>0">
         <thead>
           <tr>
             <th v-for="item in thead">{{item}}</th>
