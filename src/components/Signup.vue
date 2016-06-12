@@ -87,7 +87,8 @@ export default {
       var credentials =
       {
         email:this.credentials.email,
-        password:this.credentials.password
+        password:this.credentials.password,
+        mtype:2
       }
 
       if (Validator.isEmail(credentials.email)!=true){

@@ -60,8 +60,8 @@ export default {
         finishTime: '2016-01-01',
         title: '',
         description: '',
-        price:100,
-        amount:100,
+        price:1,
+        amount:1,
         plan:['2'],
         link:'',
         doc:''

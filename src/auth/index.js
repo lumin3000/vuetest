@@ -34,11 +34,10 @@ export default {
       if (res.data.msg === 'success') {
         cb()
       } else {
-        console.log('res')
-        console.log(res)
+        cb(res.data.msg)
       }
     }, (err) => {
-      cb(err.data)
+      cb(err.data.msg)
     })
   },
 

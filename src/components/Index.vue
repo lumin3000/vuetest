@@ -5,6 +5,12 @@
         <slider>
           <img src="/static/pic/index1.jpg">
         </slider>
+        <slider>
+          <img src="/static/pic/index2.jpg">
+        </slider>
+        <slider>
+          <img src="/static/pic/index3.jpg">
+        </slider>
       </carousel>
     </div>
     <table class="index-table">

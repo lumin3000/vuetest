@@ -129,7 +129,7 @@ export default {
         // res.data.user.gender = [res.data.user.sex || 'm']
         this.user = {
           nick: u.uname || '',
-          gender: [u.sex || 'm'],
+          gender: [u.sex || '男'],
           avatar: u.face || false,
           mail: u.mail || '',
           weixin: u.weixin || '',
@@ -151,12 +151,12 @@ export default {
       error:false,
       success:false,
       planOptions: [
-        {value:'m', label:'男'},
-        {value:'f', label:'女'}
+        {value:'男', label:'男'},
+        {value:'女', label:'女'}
       ],
       user:{
         nick:'',
-        gender:['m'],
+        gender:['男'],
         weixin:'',
         mail:'',
         phone:'',

@@ -537,4 +537,7 @@ div.iframePreview + div .btn-primary{
   }
 }
 
+.carousel-indicators li, .carousel-indicators .active {
+  margin: 4px!important;
+}
 </style>

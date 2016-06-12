@@ -195,8 +195,8 @@ export default {
           finishTime: `${today.getFullYear()}-${zeroize(today.getMonth()+2)}-${zeroize(today.getDate())}`,
           title: '',
           description: '',
-          price:100,
-          amount:100,
+          price:1,
+          amount:1,
           plan:['2'],
           link:'',
           doc:''

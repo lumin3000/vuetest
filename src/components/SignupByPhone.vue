@@ -98,15 +98,16 @@ export default {
       var credentials = {
         mobile: this.credentials.username,
         password: this.credentials.password,
-        code:this.credentials.password2
+        code:this.credentials.password2,
+        mtype:2
       }
       if (Validator.isMobilePhone(this.credentials.username, 'zh-CN')!=true){
         return this.alertError = !!(this.error = "请输入正确的手机号码")
       }
-      else if (Validator.isLength(credentials.pwd, {min: 6, max: 20})!=true){
+      else if (Validator.isLength(credentials.password, {min: 6, max: 20})!=true){
         return this.alertError = !!(this.error = "密码长度为6-20位")
       }
-      else if (Validator.isAlphanumeric(credentials.pwd)!=true){
+      else if (Validator.isAlphanumeric(credentials.password)!=true){
         return this.alertError = !!(this.error = "密码只能包含数字和英文字母")
       }
       else if (Validator.isLength(this.credentials.password2, {min: 4,max: 6})!=true){

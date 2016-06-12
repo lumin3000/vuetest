@@ -38,7 +38,7 @@ export default {
     return {
       arrowPosition:'arrow-pos2',
       pageTitle:{name: '流水详情：', className: 'account-title' },
-      extraInfo:'帐户余额 <span class=high-light>0,</span>（充值请联系客服，电话 010-888 8888）',
+      extraInfo:'帐户余额 <span class=high-light>0,</span>（充值请联系客服，电话 010-84417406转805）',
       thead:['收入','支出','来自','时间'],
       tbody:['income','expenses','from','time'],
       urlIncome:urlConf.account.income,
