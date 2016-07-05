@@ -20,18 +20,23 @@ export default {
 
       this.$http[this.urlIncome?'post':'get']( this.urlIncome || this.fakeUrl, params)
       .then( (res) => {
-        console.log("urlIncome")
         console.log(res)
         if(!res.data.items){
           return transition.next()
         }
-        this.pagination(res.data.items)
+        let items = res.data.items.map(function(o){
+          let ro = o
+          if (!ro.from){
+            ro.from = o.to ? o.to : ''
+          }
+          return ro
+        })
+        this.pagination(items)
         transition.next()
       }, (err) => {
         this.alertError = !!(this.error = '网站服务出现错误')
         transition.next()
       })
-      console.log('what????')
     }
   },
   data () {
@@ -39,7 +44,7 @@ export default {
       arrowPosition:'arrow-pos2',
       pageTitle:{name: '流水详情：', className: 'account-title' },
       extraInfo:'帐户余额 <span class=high-light>0,</span>（充值请联系客服，电话 010-84417406转805）',
-      thead:['收入','支出','来自','时间'],
+      thead:['收入','支出','描述','时间'],
       tbody:['income','expenses','from','time'],
       urlIncome:urlConf.account.income,
       urlFortune:urlConf.account.fortune,
