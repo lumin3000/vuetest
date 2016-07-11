@@ -178,9 +178,15 @@ table, .table *{
 .pagination-bar input{
  width:32px;
 }
-
+.table-hover p {
+  margin:2px 0px
+}
 .table-hover > tbody > tr:hover {
   background-color: #d9d9d9;
+}
+
+.table-hover > tfoot > tr > td {
+  text-align: right
 }
 
 .avatar{
@@ -195,6 +201,7 @@ table, .table *{
   width:220px;
   height: 220px;
 }
+
 span.fileupload-button{
   width: 220px!important;
   line-height: 48px!important;
@@ -400,6 +407,7 @@ a.without-underline:hover {
   font-weight: 200;
   line-height: 52px;
   padding:8px 45px!important;
+  margin:auto 20px
 }
 
 .form-group label {
@@ -513,6 +521,163 @@ div.iframePreview + div .btn-primary{
   background-image: url('/static/pic/indexbanner2.gif')
 }
 
+
+.vip_selector{
+  width:900px;
+  font-size:18px;
+  height:340px;
+}
+
+.vip_selector .checkbox-group{
+    width:650px
+}
+
+.vip_selector .col-xs-10 .btn{
+  width:78px;
+  margin-right:23px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  border:2px solid #FA692F;
+  background-color: white;
+  color:black;
+}
+
+.vip_selector .col-xs-2 .btn{
+  border:2px solid #FA692F;
+  background-color: white;
+  color:black;
+  font-size: 18px;
+}
+
+.vip_selector .labeler, .vip_selector .select-title{
+  margin-top: 10px;
+  text-align: right;
+}
+
+.vip_selector .btn-default[disabled]{
+  border:2px solid gray;
+  color:gray;
+}
+.vip_selector .btn-default:hover{
+  color:black
+}
+
+.vip_selector .btn-default.active{
+  background-color:#FA692F;
+  color:white
+}
+
+.vip_selector .col-xs-12 {
+  margin: 30px
+}
+.search-xs-12 .btn-lg, .next-step .btn-lg{
+  width:180px;
+  margin-bottom: 30px
+}
+.breadcrumb {
+  background: transparent
+}
+.next-step{
+  clear:both
+}
+
+.prev-step{
+  margin:100px auto
+}
+
+.important{
+  color:#fe7d3c;
+  font-weight: 400
+}
+
+.missions-new
+{
+  padding:35px 80px 35px 0px;
+}
+.missions-new .form-horizontal
+{
+  text-align: left
+}
+.missions-new .form-group{
+  height:20px;
+  margin:0px;
+}
+.missions-new input, .missions-new select {
+  margin-bottom: 30px
+}
+.missions-new textarea{
+  margin-bottom:30px
+}
+.missions-new .hr{
+  clear:both;
+  height:0px;
+  line-height: 0px;
+  font-size:0px;
+}
+.missions-new .publish-group{
+  padding-top:30px
+}
+
+.missions-new .publish-group button{
+  width:190px;
+  font-weight: 200;
+  color:white;
+}
+
+.missions-new .publish-group button:nth-of-type(1){
+  background-color: #37bd9c;
+  margin-right:112px;
+}
+.missions-new .publish-group button:nth-of-type(2) {
+  background-color: #219cea;
+}
+.missions-new .space30 {
+  line-height: 30px
+}
+.missions-new .space0{
+  line-height: 0px;
+  font-size: 0px;
+}
+.missions-new .datepicker{
+  width:100%;
+}
+.missions-new .times {
+  padding:0px
+}
+.missions-new .times input {
+  padding-right:0px
+}
+.missions-new .time2 {
+  line-height: 40px;
+  padding:0px;
+  text-align: center
+}
+
+.missions-new .breadcrumb {
+  padding-left:80px
+}
+
+table .avatar-frame{
+  float:left;
+  margin-right:18px;
+}
+.avatar-frame, .avatar-frame img, .avatar-frame span{
+	width: 50px;
+	height: 50px;
+	-webkit-border-radius: 30px; /* Saf3+, Chrome */
+	border-radius: 30px; /* Opera 10.5, IE 9 */
+	/*-moz-border-radius: 30px;  Disabled for FF1+ */
+}
+.avatar-frame img, .avatar-frame span{
+  border: 2px solid gray;
+}
+.avatar-frame span{
+  font-size:30px;
+  padding:8px;
+  background: #d9d9d9;
+  color:gray
+}
+
 @media (min-height: 600px) {
   .appblanker{
     margin-top:5%;
@@ -540,4 +705,6 @@ div.iframePreview + div .btn-primary{
 .carousel-indicators li, .carousel-indicators .active {
   margin: 4px!important;
 }
+
+
 </style>

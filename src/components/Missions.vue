@@ -1,23 +1,11 @@
 <template>
   <div class="panel-wraper">
     <div class="arrow arrow-pos1">&nbsp;</div>
-    <alert
-      :show.sync="alertSuccess"
-      :duration="3000"
-      type="info"
-      placement="top"
-      width="350px"
-      dismissable>
+    <alert :show.sync="alertSuccess" :duration="3000" type="info" placement="top" width="350px" dismissable>
         <span class="icon-info-circled alert-icon-float-left"></span>
         <p>{{success}}</p>
     </alert>
-    <alert
-      :show.sync="alertError"
-      :duration="3000"
-      type="danger"
-      placement="top"
-      width="350px"
-      dismissable>
+    <alert :show.sync="alertError" :duration="3000" type="danger" placement="top" width="350px" dismissable>
         <span class="icon-info-circled alert-icon-float-left"></span>
         <p>{{error}}</p>
     </alert>
@@ -25,6 +13,7 @@
     <div class="panelr">
       <center>
         <a class="btn btn-primary btn-publish" v-link="{name:'missions-new'}">发布新任务</a>
+        <a class="btn btn-primary btn-publish" v-link="{name:'missions2-new1'}">自定义任务</a>
       </center>
       <p v-if="items">我的任务：</p>
       <table class="table table-hover" v-if="items">
@@ -54,7 +43,7 @@
             <td class="text-right">{{item.remain}}</td>
             <td class="text-right">{{item.totalPrice}}</td>
               <td class="text-right">
-                <button class="btn btn-primary" @click="routerGo({name:'missions-edit',params:{missionId:item.id}})" >编辑</button>
+                <button class="btn btn-primary" @click="show(item.t_type,item.id)" >编辑</button>
                 <!-- <button class="btn btn-danger" @click="removeMissionConfirm(item.id)">删除</button> -->
               </td>
           </tr>
@@ -128,6 +117,7 @@ export default {
         }
         let items = res.data.items.reverse().map(function(o){
           return {
+            t_type:o.t_type,
             id:o.t_id,
             title:o.t_name,
             unitPrice:o.t_price,
@@ -166,6 +156,13 @@ export default {
   },
 
   methods: {
+    show (t_type,t_id){
+      if(t_type==='3'){
+        this.routerGo({name:'missions2-edit',params:{missionId:t_id}})
+      }else {
+        this.routerGo({name:'missions-edit',params:{missionId:t_id}})
+      }
+    },
     routerGo (r) {
       router.go(r)
     },

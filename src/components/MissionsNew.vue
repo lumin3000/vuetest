@@ -21,7 +21,7 @@
         <span class="icon-info-circled alert-icon-float-left"></span>
         <p>{{error}}</p>
     </alert>
-    <div class="panelr">
+    <div class="panelr missions-new">
       <div class="form-horizontal">
         <div class="form-group">
           <label for="inputTitle" class="col-xs-2 control-label">任务名称：</label>
@@ -332,67 +332,5 @@ export default {
   }
   iframe {
     height:270px;
-  }
-  div.panelr
-  {
-    padding:35px 80px 35px 0px;
-  }
-  .panelr .form-horizontal
-  {
-    text-align: left
-  }
-  .form-group{
-    height:20px;
-    margin:0px;
-  }
-  .panelr input, .panelr select {
-    margin-bottom: 30px
-  }
-  .panelr textarea{
-    margin-bottom:30px
-  }
-  .hr{
-    clear:both;
-    height:0px;
-    line-height: 0px;
-    font-size:0px;
-  }
-  .publish-group{
-    padding-top:30px
-  }
-
-  .publish-group button{
-    width:190px;
-    font-weight: 200;
-    color:white;
-  }
-
-  .publish-group button:nth-of-type(1){
-    background-color: #37bd9c;
-    margin-right:112px;
-  }
-  .publish-group button:nth-of-type(2) {
-    background-color: #219cea;
-  }
-  .space30 {
-    line-height: 30px
-  }
-  .space0{
-    line-height: 0px;
-    font-size: 0px;
-  }
-  .datepicker{
-    width:100%;
-  }
-  .times {
-    padding:0px
-  }
-  .times input {
-    padding-right:0px
-  }
-  .time2 {
-    line-height: 40px;
-    padding:0px;
-    text-align: center
   }
 </style>
