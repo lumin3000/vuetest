@@ -293,6 +293,11 @@ export default {
       }
       this.pictures = [].concat(store)
     },
+    restoreUi (){
+      this.pictures = []
+      this.fileName = false
+      this.items.fileUrl = ''
+    },
     submit () {
       if(this.xhrLock === true)
       {
@@ -327,15 +332,13 @@ export default {
 
       this.$http.post(this.url,items)
       .then( (res) => {
-        if(res.data.code === 0 )
-        {
+        if(res.data.code === 0 ) {
           this.alertSuccess = !!(this.success = '发布成功')
           this.xhrLock = false
           this.submitSuccess = true
           window.localStoreArray.destory('vip_list')
-          setTimeout( function(){
-            router.go({name:"missions"})
-          }, 3500)
+          this.restoreUi()
+          setTimeout( function(){router.go({name:"missions"})}, 3100)
         } else {
           this.alertError = !!(this.error = res.data.msg)
           this.xhrLock = false_id
