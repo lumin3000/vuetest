@@ -34,7 +34,7 @@
         >
       </div>
       <button class="btn btn-primary" @click="submit()">注册</button>
-      <div class="btn-below">已经拥有帐号? <a v-link="{name:'login'}">直接登录</a></div>
+      <div class="btn-below">已经拥有帐号? <a v-link="{name:'login'}">直接登录</a> ｜ <a v-link="{name:'index'}">返回首页</a></div>
     </div>
     <alert
       :show.sync="alertError"

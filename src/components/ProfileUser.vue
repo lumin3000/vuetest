@@ -224,7 +224,7 @@ export default {
 
       this.$http.post(this.urlEdit,user)
       .then( (res) => {
-        if(res.data.msg === 'success' )
+        if(res.data.code === 0 )
         {
           this.alertSuccess = !!(this.success = '个人信息修改已经保存')
 

@@ -120,7 +120,7 @@ export default {
       }
       this.$http.post(this.url,credentials)
       .then( (res) => {
-        if(res.data.msg!='success')
+        if(res.data.code!=0)
         {
           return this.alertError = !!(this.error = res.data.msg)
         } else{

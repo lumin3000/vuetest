@@ -30,14 +30,12 @@ export default {
             fileUrl:(o.task_file || '')
           }
         }))[0]
-        console.log(res.data.items)
         this.pictures = (res.data.items.task_img === '')?[]:res.data.items.task_img.split(',')
         let url = this.items.fileUrl
         url = url.split('/')
         this.fileName = url[url.length-1]
         transition.next()
       }, (err) => {
-        console.log(err)
         this.alertError = !!(this.error = '网站服务出现错误')
         transition.next()
       })

@@ -33,23 +33,13 @@
         <button class="btn btn-default col-xs-1" @click="submitPhone()">获取验证码</button>
       </div>
       <button class="btn btn-primary" @click="submit()">注册</button>
-      <div class="btn-below">已经拥有帐号? <a v-link="{name:'login'}">直接登录</a></div>
+      <div class="btn-below">已经拥有帐号? <a v-link="{name:'login'}">直接登录</a> ｜ <a v-link="{name:'index'}">返回首页</a></div>
     </div>
-    <alert
-      :show.sync="alertError"
-      :duration="3000"
-      type="danger"
-      width="350px"
-      dismissable>
+    <alert :show.sync="alertError" :duration="3000" type="danger" width="350px" dismissable>
         <span class="icon-info-circled alert-icon-float-left"></span>
         <p>{{error}}</p>
     </alert>
-    <alert
-      :show.sync="alertSuccess"
-      :duration="3000"
-      type="info"
-      width="350px"
-      dismissable>
+    <alert :show.sync="alertSuccess" :duration="3000" type="info" width="350px" dismissable>
         <span class="icon-info-circled alert-icon-float-left"></span>
         <p>{{success}}</p>
     </alert>

@@ -14,7 +14,8 @@ export default {
       }
       this.$http[this.vipUrl?'post':'get']( this.vipUrl || this.fakeUrl, params)
       .then( (res) => {
-        if(!res.data.items){
+        if(res.data.code!=0){
+          this.alertError = !!(this.error = res.data.msg)
           return transition.next()
         }
         window.store.wemedia = [].concat(res.data.items)

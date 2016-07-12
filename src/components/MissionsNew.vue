@@ -303,7 +303,7 @@ export default {
       // items.doc = iframe.$('#trumbowyg').trumbowyg('html')
       this.$http.post(this.url,items)
       .then( (res) => {
-        if(res.data.msg === 'success' )
+        if(res.data.code === 0 )
         {
           this.alertSuccess = !!(this.success = '发布成功')
           this.xhrLock = false

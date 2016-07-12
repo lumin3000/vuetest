@@ -15,7 +15,7 @@ export default {
     let url = (creds.type === 'email') ? LOGIN_URL : LOGIN_PHONE_URL
     context.$http.post(url, creds)
     .then((res) => {
-      if (res.data.msg === 'success') {
+      if (res.data.code === 0) {
         this.user.authenticated = true
         localStorage.setItem('id_token', res.data.items.scode)
         localStorage.setItem('id_user', res.data.items.uid)
@@ -31,7 +31,7 @@ export default {
   authMobile (context, data, cb) {
     context.$http.post(SIGNUP_PHONE_AUTHCODE_URL, data)
     .then((res) => {
-      if (res.data.msg === 'success') {
+      if (res.data.code === 0) {
         cb()
       } else {
         cb(res.data.msg)
@@ -48,7 +48,7 @@ export default {
     }
     context.$http.post(url, creds)
     .then((res) => {
-      if (res.data.msg === 'success') {
+      if (res.data.code === 0) {
         this.user.authenticated = true
         localStorage.setItem('id_token', res.data.items.scode)
         localStorage.setItem('id_user', res.data.items.uid)

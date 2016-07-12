@@ -183,7 +183,7 @@ export default {
         {value:'5', label:'1000-3000',range:[1000,3000]},
         {value:'6', label:'3000以上',range:[3001,999999]}
       ],
-      defaultCity:['1'],
+      defaultCity:['0'],
       defaultPrice:['1'],
       defaultAge:['2'],
       interestsValue: [],

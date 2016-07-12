@@ -127,6 +127,7 @@
             v-bind:request-options = "reqopts"
             >
             </vue-file-upload>
+            <span class="fileurl">最多可传9张图片</span>
             <div class="images-uploaded" v-for="picture in pictures">
               <div>
                 <button type="button" class="close" @click="removePicture(picture)">
@@ -326,7 +327,7 @@ export default {
 
       this.$http.post(this.url,items)
       .then( (res) => {
-        if(res.data.msg === 'success' )
+        if(res.data.code === 0 )
         {
           this.alertSuccess = !!(this.success = '发布成功')
           this.xhrLock = false

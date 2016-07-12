@@ -1,19 +1,35 @@
 <template>
-  <div class="appblanker-container">
+  <div class="appblanker-container index">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/static/pic/indexlogo.gif">
+          </a>
+        </div>
+        <span class="navbar-form navbar-right">
+          <button type="button" class="btn btn-default navbar-btn" @click="btnLogin()">登录</button>
+          <button type="button" class="btn btn-primary navbar-btn" @click="btnSignup()">注册</button>
+        </span>
+      </div>
+
+    </nav>
     <div class="index-container">
       <carousel>
         <slider>
-          <img src="/static/pic/index1.jpg">
+          <img src="/static/pic/indexbg1.jpg">
         </slider>
         <slider>
-          <img src="/static/pic/index2.jpg">
+          <img src="/static/pic/indexbg2.jpg">
         </slider>
-        <slider>
-          <img src="/static/pic/index3.jpg">
-        </slider>
+        <center>
+          <button class="btn btn-lg btn-primary" @click="btnLeft()">广告主</button>
+          <button class="btn btn-lg btn-primary" @click="btnRight()">自媒体</button>
+        </center>
       </carousel>
     </div>
-    <table class="index-table">
+
+    <table class="index-table hide">
       <tbody>
         <tr>
           <td>
@@ -63,6 +79,12 @@ export default {
     }
   },
   methods: {
+    btnLogin (){
+      router.go({name:"login"})
+    },
+    btnSignup (){
+      router.go({name:"signup"})
+    },
     btnLeft (){
       router.go({name:"login"})
     },

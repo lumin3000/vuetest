@@ -116,7 +116,7 @@ export default {
       }
       this.$http[this.url?'post':'get'](this.url || '/static/fakeEnterprise.json',params)
       .then( (res) => {
-        if(!res.data.msg || res.data.msg!='success'){
+        if(!res.data.code!=0){
           this.alertError = !!(this.error = res.data.msg)
         } else{
           let item = res.data.items
@@ -208,7 +208,7 @@ export default {
 
       this.$http.post(this.urlEdit,item)
       .then( (res) => {
-        if(res.data.msg === 'success' )
+        if(res.data.code === 0 )
         {
           this.alertSuccess = !!(this.success = '信息已经提交审核')
 
