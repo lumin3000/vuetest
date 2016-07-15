@@ -22,13 +22,18 @@
         <slider>
           <img src="/static/pic/indexbg2.jpg">
         </slider>
+        <slider>
+          <img src="/static/pic/indexbg3.jpg">
+        </slider>
         <center>
           <button class="btn btn-lg btn-primary" @click="btnLeft()">广告主</button>
           <button class="btn btn-lg btn-primary" @click="btnRight()">自媒体</button>
         </center>
       </carousel>
     </div>
-
+    <div class="footer">
+      <footerhtml></footerhtml>
+    </div>
     <table class="index-table hide">
       <tbody>
         <tr>
@@ -41,9 +46,8 @@
         </tr>
       </tbody>
     </table>
-    <div class="footer">
-      <p>2016 copyright</p>
-    </div>
+
+
   </div>
 </template>
 
@@ -51,7 +55,7 @@
 import {router} from '../main'
 import carousel from './vuetrap/Carousel'
 import slider from './vuetrap/Slider'
-
+import footerhtml from './footer'
 
 
 export default {
@@ -59,7 +63,8 @@ export default {
   components:{
     alert,
     slider,
-    carousel
+    carousel,
+    footerhtml
   },
   route: {
     data (transition){

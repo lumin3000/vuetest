@@ -1,4 +1,3 @@
-
 window.uri = 'http://open.chudianyun.com'
 window.urlConf = {
   missions: {

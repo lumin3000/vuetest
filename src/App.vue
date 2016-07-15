@@ -1,5 +1,5 @@
 <template>
-  <center id="wraper">
+  <center id="wraper" v-bind:style="wraperStyle">
     <nav class="navbar navbar-default" v-bind:class="ShowNavbar" id="navbar">
       <div class="navbar-header">
         <a v-link="{name:'panel'}">触享</a>
@@ -28,9 +28,8 @@
         </router-view>
       </div>
     </div>
-
-    <div class="footer" id="app-footer" >
-      <p>2016 copyright</p>
+    <div class="footer" id="app-footer">
+      <footerhtml></footerhtml>
     </div>
 </center>
 </template>
@@ -38,10 +37,22 @@
 <script>
 import auth from './auth'
 import { router } from './main'
+import footerhtml from './components/footer'
 
 export default {
+  components:{
+    footerhtml
+  },
+  route: {
+    data (transition) {
+      transition.next()
+  }},
+  ready (){
+    this.wraperStyle = {display:'block'}
+  },
   data() {
     return {
+      wraperStyle:{display:'none'},
       user: auth.user
     }
   },
@@ -70,13 +81,7 @@ body {
   visibility:hidden
 }
 
-.footer{
-  line-height:120px;
-  color:#c0c0c0;
-  font-size: 18px;
-  font-weight: 100;
-  background-color: white
-}
+
 
 .navbar {
   background: #ff7b30;
@@ -251,7 +256,6 @@ a.without-underline:hover {
   top:490px;
 }
 #wraper {
-  display:block;
   min-width: 1180px;
 }
 
@@ -498,16 +502,41 @@ div.iframePreview + div .btn-primary{
   display: none
 }
 
+.footer{
+  font-size: 18px;
+  font-weight: 100;
+  background: #ff934e;
+  line-height: 30px;
+  color:white;
+  text-align: center;
+
+}
+
+.footer .qrcode{
+  width:140px;
+  float:right;
+  margin-top:10.5px;
+  line-height: 40px;
+}
+.footer h5 {
+  font-size:24px
+}
+
+.footer .container-fluid{
+  text-align: left;
+  padding:20px 40px;
+}
+
+.index .navbar .container-fluid, .footer .container-fluid{
+  max-width: 1300px;
+  min-width: 1150px
+}
+
 .index .navbar{
   margin-bottom: 0px!important;
   background:white;
   border-bottom: 1px solid #ff6600;
   overflow: hidden
-}
-
-.index .navbar .container-fluid{
-  max-width: 1300px;
-  min-width: 1150px
 }
 
 .index .navbar-right button{
