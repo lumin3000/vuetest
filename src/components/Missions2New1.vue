@@ -46,10 +46,10 @@
       </div>
 
       <center class="search-xs-12">
-        <button class="btn btn-lg btn-primary" @click="find()">查找媒体</button>
+        <button class="btn btn-lg btn-primary" @click="find(true)">查找媒体</button>
       </center>
 
-      <table class="table table-hover" v-if="(items && items.length && items.length>0)">
+      <table class="table table-hover" v-if="(items && items.push && items.length>0)">
         <thead>
           <tr>
             <th>个人信息</th>
@@ -83,7 +83,9 @@
           </tr>
         </tbody>
       </table>
-
+      <center v-if="(items && items.push && items.length===0 && this.found)">
+        <h4>没有检索到匹配的媒体信息。<br><br><br><br></h4>
+      </center>
       <ul class="pagination" v-if="pageTotal>1" >
         <li :class="(pageCurrent == 1)?'disabled':''">
           <a @click="page(1)" aria-label="Previous">
@@ -161,6 +163,7 @@ export default {
       alertSuccess: false,
       error: '',
       success:'',
+      found:false,
       cityOptions: [
         {value:'0', label:'不限'},
         {value:'1', label:'北京'},
@@ -272,7 +275,10 @@ export default {
       }
 
     },
-    find (){
+    find (clicked){
+      if(clicked){
+        this.found = true
+      }
       this.pagination(this.vip)
       /*
       if(this.vip && this.vip.length && this.vip.length>0){

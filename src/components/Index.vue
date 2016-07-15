@@ -69,11 +69,15 @@ export default {
   route: {
     data (transition){
       document.getElementById('navbar').style.visibility = 'hidden'
+      document.getElementById('panelbar').style.visibility = 'hidden'
+      document.getElementById('app-footer').style.display = 'none'
       document.getElementById('app-wraper').style.minHeight = '0px'
       transition.next()
     },
     deactivate (transition){
       document.getElementById('navbar').style.visibility = 'visible'
+      document.getElementById('panelbar').style.visibility = 'visible'
+      document.getElementById('app-footer').style.display = 'block'
       document.getElementById('app-wraper').style.minHeight = '800px'
       transition.next()
     }

@@ -28,7 +28,7 @@
         </router-view>
       </div>
     </div>
-    <div class="footer" id="app-footer">
+    <div class="footer" id="app-footer" style="clear:both">
       <footerhtml></footerhtml>
     </div>
 </center>
@@ -506,9 +506,10 @@ div.iframePreview + div .btn-primary{
   font-size: 18px;
   font-weight: 100;
   background: #ff934e;
-  line-height: 30px;
+  line-height: 22px;
   color:white;
   text-align: center;
+  clear:both;
 
 }
 
@@ -516,20 +517,21 @@ div.iframePreview + div .btn-primary{
   width:140px;
   float:right;
   margin-top:10.5px;
-  line-height: 40px;
+  line-height: 30px;
+  height:70px;
 }
 .footer .qrcode img{
-  width:80%
+  width:50%
 }
 
 
 .footer h5 {
-  font-size:24px
+  font-size:20px
 }
 
 .footer .container-fluid{
   text-align: center;
-  padding:20px 40px;
+  padding:5px 40px;
 }
 
 .index .navbar .container-fluid, .footer .container-fluid{
