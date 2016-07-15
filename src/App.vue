@@ -518,12 +518,17 @@ div.iframePreview + div .btn-primary{
   margin-top:10.5px;
   line-height: 40px;
 }
+.footer .qrcode img{
+  width:80%
+}
+
+
 .footer h5 {
   font-size:24px
 }
 
 .footer .container-fluid{
-  text-align: left;
+  text-align: center;
   padding:20px 40px;
 }
 
