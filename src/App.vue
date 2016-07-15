@@ -532,11 +532,12 @@ div.iframePreview + div .btn-primary{
 .footer .container-fluid{
   text-align: center;
   padding:5px 40px;
+  padding-left:170px;
 }
 
 .index .navbar .container-fluid, .footer .container-fluid{
-  max-width: 1300px;
-  min-width: 1150px
+  max-width: 1000px;
+  min-width: 900px
 }
 
 .index .navbar{
