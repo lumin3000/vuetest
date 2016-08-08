@@ -54,8 +54,8 @@
             <span aria-hidden="true">上一页</span>
           </a>
         </li>
-        <li v-for="thePage in pageTotal" :class="((pageCurrent==thePage+1)?'active':'')">
-          <a @click="page($index+1)">{{thePage+1}}</a>
+        <li v-for="thePage in navigation()" :class="((pageCurrent==thePage+1)?'active':'')">
+          <a @click="page(thePage+1)">{{thePage+1}}</a>
         </li>
         <li :class="(pageCurrent == pageTotal)?'disabled':''">
           <a @click="nextPage()" aria-label="Next" >
