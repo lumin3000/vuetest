@@ -4,17 +4,7 @@ export default {
     pagination (data){
       this.itemsStore = data
       let storeLength = this.itemsStore.length
-      let pageDefault = this.pageDefault
-      let pageTotal = 1
-      if (storeLength > pageDefault)
-      {
-        pageTotal = parseInt(storeLength / pageDefault,10)
-        if ( (storeLength % pageDefault) > 0)
-        {
-          pageTotal++
-        }
-      }
-      this.pageTotal = pageTotal
+      this.pageTotal = (storeLength > this.pageDefault) ? Math.ceil(storeLength / this.pageDefault) : 1
       this.pageCurrent = 0
       this.page(1)
     },
